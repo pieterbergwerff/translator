@@ -11,17 +11,24 @@ const preview: Preview = {
     },
     backgrounds: {
       default: 'light',
+      values: [
+        {
+          name: 'light',
+          value: 'var(--background)',
+        },
+        {
+          name: 'dark',
+          value: 'var(--background)',
+        },
+      ],
     },
   },
   decorators: [
     (Story) => (
       <div
+        className="light font-inter bg-background text-foreground min-h-screen p-4"
         style={{
           fontFamily: 'Inter, system-ui, sans-serif',
-          backgroundColor: 'var(--background, #ffffff)',
-          color: 'var(--foreground, #000000)',
-          minHeight: '100vh',
-          padding: '1rem',
         }}
       >
         <Story />

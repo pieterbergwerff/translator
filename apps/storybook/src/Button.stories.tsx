@@ -4,6 +4,10 @@ import Button from '@packages/components/atoms/Button'
 const meta = {
   title: 'Atoms/Button',
   component: Button,
+  args: {
+    variant: 'default',
+    size: 'default',
+  },
   argTypes: {
     variant: {
       control: { type: 'select' },
@@ -23,6 +27,10 @@ export const Primary: Story = {
   args: {
     variant: 'default',
     children: 'Button',
+  },
+  render: (args) => {
+    // Force the variant to be default for this story
+    return <Button {...args} variant="default" />
   },
 }
 
