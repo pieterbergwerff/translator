@@ -1,0 +1,29 @@
+{
+  "extends": "@config/typescript/react-library.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@packages/components/*": ["../../packages/components/src/*"],
+      "@packages/components": ["../../packages/components/src"],
+      "@packages/hooks/*": ["../../packages/hooks/src/*"],
+      "@packages/validators/*": ["../../packages/validators/src/*"],
+      "@packages/types/*": ["../../packages/types/src/*"],
+      "@packages/constants/*": ["../../packages/constants/src/*"],
+      "@packages/theme/*": ["../../packages/theme/src/*"],
+      "@packages/translate/*": ["../../packages/translate/src/*"],
+      "@utils/common/*": ["../../utils/common/src/*"],
+      "@utils/server/*": ["../../utils/server/src/*"],
+      "@utils/client/*": ["../../utils/client/src/*"]
+    }
+  },
+  "include": [
+    "../.storybook/*.ts",
+    "../stories/**/*.stories.@(js|jsx|ts|tsx)",
+    "../stories/**/*.@(js|jsx|ts|tsx)",
+    "src/**/*",
+    "../../packages/**/*",
+    "../../utils/**/*"
+  ]
+}

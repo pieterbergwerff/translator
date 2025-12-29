@@ -1,0 +1,40 @@
+{
+    "name": "@apps/test-ui",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "echo 'No build needed for test UI'",
+        "clean": "echo 'No clean needed for test UI'",
+        "dev": "vitest --ui",
+        "test": "vitest run",
+        "test:ui": "vitest --ui"
+    },
+    "dependencies": {
+        "@packages/components": "*",
+        "@packages/hooks": "*",
+        "@packages/validators": "*",
+        "@packages/types": "*",
+        "@packages/constants": "*",
+        "@packages/theme": "*",
+        "@packages/translate": "*",
+        "@utils/common": "*",
+        "@utils/server": "*",
+        "@utils/client": "*",
+        "@tests/unit": "*"
+    },
+    "devDependencies": {
+        "@config/typescript": "*",
+        "@testing-library/jest-dom": "^6.0.0",
+        "@testing-library/react": "^15.0.0",
+        "@types/react": "^18.3.0",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "^4.3.0",
+        "jsdom": "^24.0.0",
+        "react": "^18.3.0",
+        "react-dom": "^18.3.0",
+        "typescript": "^5.5.0",
+        "vitest": "^1.6.0",
+        "@vitest/ui": "^1.6.0"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Next.js",
+    "extends": "./base.json",
+    "compilerOptions": {
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@packages/components/*": [
+                "../../packages/components/src/*"
+            ],
+            "@packages/hooks/*": [
+                "../../packages/hooks/src/*"
+            ],
+            "@packages/validators/*": [
+                "../../packages/validators/src/*"
+            ],
+            "@packages/types/*": [
+                "../../packages/types/src/*"
+            ],
+            "@packages/constants/*": [
+                "../../packages/constants/src/*"
+            ],
+            "@packages/theme/*": [
+                "../../packages/theme/src/*"
+            ],
+            "@packages/translate/*": [
+                "../../packages/translate/src/*"
+            ],
+            "@utils/common/*": [
+                "../../utils/common/src/*"
+            ],
+            "@utils/server/*": [
+                "../../utils/server/src/*"
+            ],
+            "@utils/client/*": [
+                "../../utils/client/src/*"
+            ]
+        }
+    },
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
