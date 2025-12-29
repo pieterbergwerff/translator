@@ -8,18 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    ui: true,
     passWithNoTests: true,
-    browser: {
-      enabled: false,
-    },
-  },
-  server: {
-    port: 5173, // Regular dev server port
-  },
-  preview: {
-    port: 5000, // Preview server port
-    open: false,
   },
   resolve: {
     alias: {
