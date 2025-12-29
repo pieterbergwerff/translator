@@ -5,13 +5,17 @@
     "type": "module",
     "scripts": {
         "clean": "rm -rf node_modules package-lock.json .turbo",
+        "lint": "eslint . --max-warnings 0",
         "test": "playwright test",
         "test:headed": "playwright test --headed",
-        "test:ui": "playwright test --ui"
+        "test:ui": "playwright test --ui",
+        "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
+        "@config/eslint": "*",
         "@config/typescript": "*",
         "@playwright/test": "^1.44.0",
+        "eslint": "^9.0.0",
         "typescript": "^5.5.0"
     }
 }

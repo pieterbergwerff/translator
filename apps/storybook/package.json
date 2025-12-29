@@ -7,7 +7,9 @@
         "build": "storybook build",
         "clean": "rm -rf storybook-static node_modules package-lock.json .turbo",
         "dev": "storybook dev --port 4000 --no-open",
-        "storybook": "storybook dev --port 4000 --no-open"
+        "lint": "eslint . --max-warnings 0",
+        "storybook": "storybook dev --port 4000 --no-open",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@packages/components": "*",

@@ -1,3 +1,5 @@
 {
-  "extends": "@config/typescript/react-library.json"
+  "extends": "@config/typescript/react-library.json",
+  "include": ["tests", "*.ts"],
+  "exclude": ["node_modules"]
 }

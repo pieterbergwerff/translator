@@ -7,7 +7,8 @@
     "types": "./src/index.ts",
     "scripts": {
         "clean": "rm -rf dist node_modules package-lock.json .turbo",
-        "lint": "eslint . --max-warnings 0"
+        "lint": "eslint . --max-warnings 0",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "zod": "^3.23.0"
@@ -15,7 +16,7 @@
     "devDependencies": {
         "@config/eslint": "*",
         "@config/typescript": "*",
-        "eslint": "^8.57.0",
+        "eslint": "^9.0.0",
         "typescript": "^5.5.0"
     }
 }

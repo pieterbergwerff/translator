@@ -5,9 +5,11 @@
     "type": "module",
     "scripts": {
         "clean": "rm -rf node_modules package-lock.json .turbo",
+        "lint": "eslint . --max-warnings 0",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@packages/components": "file:../../packages/components",
@@ -23,12 +25,14 @@
         "vite": "7.3.0"
     },
     "devDependencies": {
+        "@config/eslint": "*",
         "@config/typescript": "*",
         "@testing-library/jest-dom": "^6.0.0",
         "@testing-library/react": "^15.0.0",
         "@types/react": "^18.3.0",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.0",
+        "eslint": "^9.0.0",
         "jsdom": "^24.0.0",
         "react": "^18.3.0",
         "react-dom": "^18.3.0",

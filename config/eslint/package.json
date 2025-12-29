@@ -3,24 +3,18 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
-    "main": "base.js",
+    "main": "base.mjs",
     "scripts": {
         "clean": "rm -rf node_modules package-lock.json .turbo"
     },
     "files": [
-        "base.js",
-        "nextjs.js",
-        "react-internal.js",
-        "library.js"
+        "base.mjs"
     ],
     "dependencies": {
-        "@typescript-eslint/eslint-plugin": "^7.0.0",
-        "@typescript-eslint/parser": "^7.0.0",
-        "eslint-config-next": "^15.0.0",
-        "eslint-plugin-react": "^7.34.0",
-        "eslint-plugin-react-hooks": "^4.6.0",
-        "eslint-plugin-jsx-a11y": "^6.8.0",
-        "eslint-plugin-import": "^2.29.0",
-        "eslint": "^8.57.0"
+        "@eslint/js": "^9.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
+        "eslint": "^9.0.0",
+        "typescript-eslint": "^8.0.0"
     }
 }

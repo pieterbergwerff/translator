@@ -11,11 +11,15 @@
         "test": "turbo run test",
         "test:ui": "turbo run test:ui",
         "storybook": "turbo run storybook",
-        "clean": "turbo run clean && rm -rf node_modules package-lock.json .turbo"
+        "clean": "turbo run clean && rm -rf node_modules package-lock.json .turbo",
+        "typecheck": "turbo run typecheck"
     },
     "devDependencies": {
         "@turbo/gen": "^2.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.0.0",
+        "@typescript-eslint/parser": "^8.0.0",
         "clsx": "^2.1.0",
+        "eslint": "^9.0.0",
         "prettier": "^3.0.0",
         "tailwind-merge": "^2.4.0",
         "tailwindcss-animate": "^1.0.7",

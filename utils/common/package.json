@@ -3,11 +3,24 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
-    "main": "./src/index.ts",
-    "types": "./src/index.ts",
+    "exports": {
+        "./cn": "./src/cn.ts",
+        "./string/*": "./src/string/*.ts"
+    },
+    "typesVersions": {
+        "*": {
+            "cn": [
+                "./src/cn.ts"
+            ],
+            "string/*": [
+                "./src/string/*.ts"
+            ]
+        }
+    },
     "scripts": {
         "clean": "rm -rf dist node_modules package-lock.json .turbo",
-        "lint": "eslint . --max-warnings 0"
+        "lint": "eslint . --max-warnings 0",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "clsx": "^2.1.0",
@@ -16,7 +29,7 @@
     "devDependencies": {
         "@config/eslint": "*",
         "@config/typescript": "*",
-        "eslint": "^8.57.0",
+        "eslint": "^9.0.0",
         "typescript": "^5.5.0"
     }
 }

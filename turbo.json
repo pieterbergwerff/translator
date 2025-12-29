@@ -51,6 +51,15 @@
         },
         "clean": {
             "cache": false
+        },
+        "typecheck": {
+            "dependsOn": [
+                "^build"
+            ],
+            "inputs": [
+                "$TURBO_DEFAULT$",
+                "tsconfig.json"
+            ]
         }
     }
 }

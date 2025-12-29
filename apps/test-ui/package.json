@@ -7,8 +7,10 @@
         "build": "echo 'No build needed for test UI'",
         "clean": "rm -rf node_modules package-lock.json .turbo",
         "dev": "vitest --ui --api 5000",
+        "lint": "eslint . --max-warnings 0",
         "test": "vitest run",
-        "test:ui": "vitest --ui --api 5000"
+        "test:ui": "vitest --ui --api 5000",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "@packages/components": "*",
@@ -25,6 +27,7 @@
         "vite": "7.3.0"
     },
     "devDependencies": {
+        "@config/eslint": "*",
         "@config/typescript": "*",
         "@testing-library/jest-dom": "^6.0.0",
         "@testing-library/react": "^15.0.0",
@@ -32,6 +35,7 @@
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.0",
         "@vitest/ui": "^1.6.0",
+        "eslint": "^9.0.0",
         "jsdom": "^24.0.0",
         "react": "^18.3.0",
         "react-dom": "^18.3.0",
