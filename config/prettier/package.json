@@ -4,6 +4,9 @@
     "private": true,
     "type": "module",
     "main": "index.js",
+    "scripts": {
+        "clean": "rm -rf node_modules package-lock.json .turbo"
+    },
     "files": [
         "index.js"
     ]

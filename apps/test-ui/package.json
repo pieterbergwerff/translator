@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "build": "echo 'No build needed for test UI'",
-        "clean": "echo 'No clean needed for test UI'",
+        "clean": "rm -rf node_modules package-lock.json .turbo",
         "dev": "vitest",
         "test": "vitest run",
         "test:ui": "vitest --ui --port 5000"

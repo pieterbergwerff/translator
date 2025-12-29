@@ -4,6 +4,9 @@
     "private": true,
     "type": "module",
     "main": "base.json",
+    "scripts": {
+        "clean": "rm -rf node_modules package-lock.json .turbo"
+    },
     "files": [
         "base.json",
         "nextjs.json",

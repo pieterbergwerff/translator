@@ -11,7 +11,7 @@
         "test": "turbo run test",
         "test:ui": "turbo run test:ui",
         "storybook": "turbo run storybook",
-        "clean": "turbo run clean"
+        "clean": "turbo run clean && rm -rf node_modules package-lock.json .turbo"
     },
     "devDependencies": {
         "@turbo/gen": "^2.0.0",
@@ -35,7 +35,7 @@
         "tests/*"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=24"
     },
     "dependencies": {
         "@vitest/ui": "^4.0.16"

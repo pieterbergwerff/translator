@@ -4,6 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "clean": "rm -rf node_modules package-lock.json .turbo",
         "test": "vitest run",
         "test:watch": "vitest",
         "test:ui": "vitest --ui"

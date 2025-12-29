@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "build": "storybook build",
-        "clean": "rm -rf storybook-static",
+        "clean": "rm -rf storybook-static node_modules package-lock.json .turbo",
         "dev": "storybook dev --port 4000 --no-open",
         "storybook": "storybook dev --port 4000 --no-open"
     },
