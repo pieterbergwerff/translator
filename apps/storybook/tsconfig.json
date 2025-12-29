@@ -19,11 +19,22 @@
     }
   },
   "include": [
-    "../.storybook/*.ts",
+    ".storybook/*.ts",
+    ".storybook/*.tsx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
     "../stories/**/*.@(js|jsx|ts|tsx)",
     "src/**/*",
-    "../../packages/**/*",
-    "../../utils/**/*"
+    "../../packages/**/src/**/*.ts",
+    "../../packages/**/src/**/*.tsx",
+    "../../utils/**/src/**/*.ts",
+    "../../utils/**/src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.config.js",
+    "**/*.config.mjs",
+    "**/.eslintrc.*",
+    "**/eslint.config.*"
   ]
 }

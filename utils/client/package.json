@@ -8,7 +8,7 @@
     "scripts": {
         "clean": "rm -rf dist node_modules package-lock.json .turbo",
         "lint": "eslint . --max-warnings 0",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit --skipLibCheck"
     },
     "devDependencies": {
         "@config/eslint": "*",

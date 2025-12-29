@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
-const __filename = fileURLToPath(import.meta.url)
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 const config: StorybookConfig = {
