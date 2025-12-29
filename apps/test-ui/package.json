@@ -6,9 +6,9 @@
     "scripts": {
         "build": "echo 'No build needed for test UI'",
         "clean": "rm -rf node_modules package-lock.json .turbo",
-        "dev": "vitest",
+        "dev": "vitest --ui --api 5000",
         "test": "vitest run",
-        "test:ui": "vitest --ui --port 5000"
+        "test:ui": "vitest --ui --api 5000"
     },
     "dependencies": {
         "@packages/components": "*",
