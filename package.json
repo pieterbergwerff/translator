@@ -1,35 +1,40 @@
 {
-  "name": "translator",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo run test",
-    "test:ui": "turbo run test:ui",
-    "storybook": "turbo run storybook",
-    "clean": "turbo run clean"
-  },
-  "devDependencies": {
-    "@turbo/gen": "^2.0.0",
-    "turbo": "^2.0.0",
-    "prettier": "^3.0.0",
-    "clsx": "^2.1.0",
-    "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "packageManager": "npm@10.0.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "utils/*",
-    "config/*",
-    "tests/*"
-  ],
-  "engines": {
-    "node": ">=18"
-  }
+    "name": "translator",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "test": "turbo run test",
+        "test:ui": "turbo run test:ui",
+        "storybook": "turbo run storybook",
+        "clean": "turbo run clean"
+    },
+    "devDependencies": {
+        "@turbo/gen": "^2.0.0",
+        "turbo": "^2.0.0",
+        "prettier": "^3.0.0",
+        "clsx": "^2.1.0",
+        "tailwind-merge": "^2.4.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "overrides": {
+        "js-yaml": "^4.1.1",
+        "tmp": "^0.2.4",
+        "inquirer": "^9.3.8"
+    },
+    "packageManager": "npm@10.0.0",
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "utils/*",
+        "config/*",
+        "tests/*"
+    ],
+    "engines": {
+        "node": ">=18"
+    }
 }
