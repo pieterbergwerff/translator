@@ -2,8 +2,6 @@
   "extends": "@config/typescript/react-library.json",
   "include": ["src"],
   "compilerOptions": {
-    "composite": true,
-    "noEmit": false,
-    "emitDeclarationOnly": true
+    "rootDir": "./src"
   }
 }
