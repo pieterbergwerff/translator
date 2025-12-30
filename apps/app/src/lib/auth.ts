@@ -9,16 +9,16 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 function KnexAdapter(database: typeof db): any {
   return {
     async createUser(user: any) {
-      const id = crypto.randomUUID()
+      const userId = crypto.randomUUID()
       await database('users').insert({
-        id,
-        name: user.name,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        image: user.image,
+        userId,
+        userName: user.name,
+        userEmail: user.email,
+        userEmailVerified: user.emailVerified,
+        userImage: user.image,
       })
       return {
-        id,
+        id: userId,
         name: user.name,
         email: user.email!,
         emailVerified: user.emailVerified,
@@ -26,72 +26,144 @@ function KnexAdapter(database: typeof db): any {
       }
     },
     async getUser(id: any) {
-      const user = await database('users').where({ id }).first()
-      return user || null
+      const user = await database('users').where({ userId: id }).first()
+      if (!user) return null
+      return {
+        id: user.userId,
+        name: user.userName,
+        email: user.userEmail,
+        emailVerified: user.userEmailVerified,
+        image: user.userImage,
+      }
     },
     async getUserByEmail(email: any) {
-      const user = await database('users').where({ email }).first()
-      return user || null
+      const user = await database('users').where({ userEmail: email }).first()
+      if (!user) return null
+      return {
+        id: user.userId,
+        name: user.userName,
+        email: user.userEmail,
+        emailVerified: user.userEmailVerified,
+        image: user.userImage,
+      }
     },
     async getUserByAccount({ providerAccountId, provider }: any) {
-      const account = await database('accounts').where({ provider, providerAccountId }).first()
+      const account = await database('accounts')
+        .where({ accountProvider: provider, accountProviderAccountId: providerAccountId })
+        .first()
       if (!account) return null
-      const user = await database('users').where({ id: account.userId }).first()
-      return user || null
+      const user = await database('users').where({ userId: account.accountUserId }).first()
+      if (!user) return null
+      return {
+        id: user.userId,
+        name: user.userName,
+        email: user.userEmail,
+        emailVerified: user.userEmailVerified,
+        image: user.userImage,
+      }
     },
     async updateUser(user: any) {
-      await database('users').where({ id: user.id }).update(user)
+      await database('users').where({ userId: user.id }).update({
+        userName: user.name,
+        userEmail: user.email,
+        userEmailVerified: user.emailVerified,
+        userImage: user.image,
+      })
       return user
     },
     async linkAccount(account: any) {
-      const id = crypto.randomUUID()
-      await database('accounts').insert({ id, ...account })
+      const accountId = crypto.randomUUID()
+      await database('accounts').insert({
+        accountId,
+        accountUserId: account.userId,
+        accountType: account.type,
+        accountProvider: account.provider,
+        accountProviderAccountId: account.providerAccountId,
+        accountRefreshToken: account.refresh_token,
+        accountAccessToken: account.access_token,
+        accountExpiresAt: account.expires_at,
+        accountTokenType: account.token_type,
+        accountScope: account.scope,
+        accountIdToken: account.id_token,
+        accountSessionState: account.session_state,
+      })
     },
     async unlinkAccount({ providerAccountId, provider }: any) {
-      await database('accounts').where({ provider, providerAccountId }).delete()
+      await database('accounts')
+        .where({ accountProvider: provider, accountProviderAccountId: providerAccountId })
+        .delete()
     },
     async createSession({ sessionToken, userId, expires }: any) {
-      const id = crypto.randomUUID()
+      const sessionId = crypto.randomUUID()
       await database('sessions').insert({
-        id,
+        sessionId,
         sessionToken,
-        userId,
-        expires,
+        sessionUserId: userId,
+        sessionExpires: expires,
       })
-      return { id, sessionToken, userId, expires }
+      return { id: sessionId, sessionToken, userId, expires }
     },
     async getSessionAndUser(sessionToken: any) {
       const session = await database('sessions').where({ sessionToken }).first()
       if (!session) return null
-      const user = await database('users').where({ id: session.userId }).first()
+      const user = await database('users').where({ userId: session.sessionUserId }).first()
       if (!user) return null
-      return { session, user }
+      return {
+        session: {
+          id: session.sessionId,
+          sessionToken: session.sessionToken,
+          userId: session.sessionUserId,
+          expires: session.sessionExpires,
+        },
+        user: {
+          id: user.userId,
+          name: user.userName,
+          email: user.userEmail,
+          emailVerified: user.userEmailVerified,
+          image: user.userImage,
+        },
+      }
     },
     async updateSession(session: any) {
       const { sessionToken, ...updateData } = session
-      await database('sessions').where({ sessionToken }).update(updateData)
+      await database('sessions').where({ sessionToken }).update({
+        sessionUserId: updateData.userId,
+        sessionExpires: updateData.expires,
+      })
       // Get the updated session from the database
       const updatedSession = await database('sessions').where({ sessionToken }).first()
-      return updatedSession
+      if (!updatedSession) return null
+      return {
+        id: updatedSession.sessionId,
+        sessionToken: updatedSession.sessionToken,
+        userId: updatedSession.sessionUserId,
+        expires: updatedSession.sessionExpires,
+      }
     },
     async deleteSession(sessionToken: any) {
       await database('sessions').where({ sessionToken }).delete()
     },
     async createVerificationToken({ identifier, expires, token }: any) {
       await database('verificationTokens').insert({
-        identifier,
-        token,
-        expires,
+        verificationTokenIdentifier: identifier,
+        verificationTokenToken: token,
+        verificationTokenExpires: expires,
       })
       return { identifier, expires, token }
     },
     async useVerificationToken({ identifier, token }: any) {
       const verificationToken = await database('verificationTokens')
-        .where({ identifier, token })
+        .where({ verificationTokenIdentifier: identifier, verificationTokenToken: token })
         .first()
       if (!verificationToken) return null
-      await database('verificationTokens').where({ identifier, token }).delete()
-      return verificationToken
+      await database('verificationTokens')
+        .where({ verificationTokenIdentifier: identifier, verificationTokenToken: token })
+        .delete()
+      return {
+        identifier: verificationToken.verificationTokenIdentifier,
+        token: verificationToken.verificationTokenToken,
+        expires: verificationToken.verificationTokenExpires,
+      }
     },
   }
 }

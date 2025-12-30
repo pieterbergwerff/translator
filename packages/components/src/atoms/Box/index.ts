@@ -1,1 +1,1 @@
-export { default, BoxAtomComponent } from './Box.atom.tsx'
+export { default, BoxAtomComponent } from './Box.atom'
