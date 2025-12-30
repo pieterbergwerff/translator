@@ -3,31 +3,41 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
-    "main": "./src/index.ts",
-    "types": "./src/index.ts",
     "exports": {
         "./user.validator": "./src/user.validator.ts",
-        "./session.validator": "./src/session.validator.ts",
         "./account.validator": "./src/account.validator.ts",
+        "./session.validator": "./src/session.validator.ts",
+        "./translation.validator": "./src/translation.validator.ts",
         "./verification-token.validator": "./src/verification-token.validator.ts",
-        "./translation.validator": "./src/translation.validator.ts"
+        "./settings.validator": "./src/settings.validator.ts",
+        "./theme-mode.validator": "./src/theme-mode.validator.ts",
+        "./*": "./src/*"
     },
     "typesVersions": {
         "*": {
             "user.validator": [
                 "./src/user.validator.ts"
             ],
+            "account.validator": [
+                "./src/account.validator.ts"
+            ],
             "session.validator": [
                 "./src/session.validator.ts"
             ],
-            "account.validator": [
-                "./src/account.validator.ts"
+            "translation.validator": [
+                "./src/translation.validator.ts"
             ],
             "verification-token.validator": [
                 "./src/verification-token.validator.ts"
             ],
-            "translation.validator": [
-                "./src/translation.validator.ts"
+            "settings.validator": [
+                "./src/settings.validator.ts"
+            ],
+            "theme-mode.validator": [
+                "./src/theme-mode.validator.ts"
+            ],
+            "*": [
+                "./src/*"
             ]
         }
     },

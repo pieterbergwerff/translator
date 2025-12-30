@@ -178,6 +178,24 @@ const [state, dispatch, isPending] = useActionState(serverAction, initialState)
 
 ### Styling System
 
+**Single Global CSS File** - ALL global styles in `packages/theme/src/globals.css`:
+
+```typescript
+// ✅ CORRECT - Import theme package globals in app layout
+import '@packages/theme/globals.css'
+
+// ❌ WRONG - Never create duplicate globals.css files
+import './globals.css' // Don't create in apps/app/src/app/
+import '../globals.css' // Don't create in packages/components/src/
+```
+
+**Critical Rules**:
+
+- ONE globals.css file: `packages/theme/src/globals.css`
+- All CSS variables, Tailwind directives, and global styles go here
+- Apps and packages import from `@packages/theme/globals.css`
+- Never create local globals.css files in apps or other packages
+
 **Tailwind + OKLCH colors** with CSS custom properties (NOT media queries for dark mode):
 
 ```typescript
@@ -334,21 +352,34 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 ## Common Pitfalls
 
 1. **No package-level barrel exports** - Never create package-wide `index.ts` files (e.g., `@packages/components/src/index.ts`), but DO create folder-level index.ts for each component
-2. **PostCSS must be `.cjs`** - ESM projects need CommonJS extension for PostCSS config
-3. **JWT session required** - NextAuth Credentials provider fails without `session: { strategy: 'jwt' }`
-4. **React 19 only** - Project uses `useActionState` - ensure React 19 in test environments
-5. **Environment splitting** - Respect `@utils/client` vs `@utils/server` boundaries
-6. **Turbo outputs** - Empty builds need `outputs: []` in `turbo.json` (e.g., `@packages/database`)
-7. **Validator schemas have timestamps** - All database entity validators include `created_at` and `updated_at` Date fields - tests must include these
-8. **Validator exports configuration** - Packages with direct file imports (like validators) need both `exports` and `typesVersions` fields in package.json for TypeScript resolution
-9. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
-10. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
-11. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
-12. **Playwright test selectors** - Use `page.getByLabel()` instead of `page.getByLabelText()` - the latter doesn't exist in Playwright's API
-13. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
-14. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
-15. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
-16. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
+2. **Single globals.css only** - Only `packages/theme/src/globals.css` should exist - never create duplicate globals.css in apps or other packages
+3. **PostCSS must be `.cjs`** - ESM projects need CommonJS extension for PostCSS config
+4. **JWT session required** - NextAuth Credentials provider fails without `session: { strategy: 'jwt' }`
+5. **React 19 only** - Project uses `useActionState` - ensure React 19 in test environments
+6. **Environment splitting** - Respect `@utils/client` vs `@utils/server` boundaries
+7. **Turbo outputs** - Empty builds need `outputs: []` in `turbo.json` (e.g., `@packages/database`)
+8. **Validator schemas have timestamps** - All database entity validators include `created_at` and `updated_at` Date fields - tests must include these
+9. **Validator exports configuration** - Packages with direct file imports (like validators/hooks) need both `exports` and `typesVersions` fields in package.json for TypeScript resolution with explicit file mappings
+10. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
+11. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
+12. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
+13. **Playwright test selectors** - Use `page.getByLabel()` instead of `page.getByLabelText()` - the latter doesn't exist in Playwright's API
+14. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
+15. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
+16. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
+17. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
+18. **TypeScript rootDir requirement** - Packages using direct file exports in `exports` field must specify `rootDir` in tsconfig.json to avoid ambiguous project root errors
+19. **Redundant boolean casts** - ESLint will flag `!!variable` as redundant - use `variable` directly when the value is already truthy/falsy
+20. **Validator schemas have timestamps** - All database entity validators include `created_at` and `updated_at` Date fields - tests must include these
+21. **Validator exports configuration** - Packages with direct file imports (like validators) need both `exports` and `typesVersions` fields in package.json for TypeScript resolution
+22. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
+23. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
+24. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
+25. **Playwright test selectors** - Use `page.getByLabel()` instead of `page.getByLabelText()` - the latter doesn't exist in Playwright's API
+26. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
+27. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
+28. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
+29. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
 
 ## Component Creation Workflow
 
@@ -412,12 +443,12 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Test Coverage Status
 
-### Unit Tests (111 tests passing)
+### Unit Tests (152 tests passing)
 
-**Components** (18 test files):
+**Components** (23 test files):
 
-- ✅ All atoms: Button, Label, Input, Box, Form
-- ✅ All molecules: Dialog, AuthClick
+- ✅ All atoms: Button, Label, Input, Box, Form, Toggle
+- ✅ All molecules: Dialog, AuthClick, ToggleGroup, SwitchThemeMode
 - ✅ All organisms: LoginModal, LoginForm
 - ✅ All templates: Default
 
@@ -432,13 +463,13 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 **Validators**:
 
-- ✅ All validators: user, session, account, verification-token, translation
+- ✅ All validators: user, session, account, verification-token, translation, settings, theme-mode
 
 ### E2E Tests (Playwright)
 
 **Coverage**:
 
-- ✅ Homepage functionality
+- ✅ Homepage functionality (15 tests passing)
 - ✅ Login modal UI interactions (opening, closing, field validation)
 - ✅ Form field input and validation
 
@@ -448,8 +479,8 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 **Coverage**:
 
-- ✅ Atoms: Button, Label, Input, Box, Form
-- ❌ Molecules: Dialog (complex), AuthClick (needs auth context)
+- ✅ Atoms: Button, Label, Input, Box, Form, Toggle
+- ❌ Molecules: Dialog (complex), AuthClick (needs auth context), SwitchThemeMode (needs settings hook), ToggleGroup (covered by Toggle stories)
 - ❌ Organisms: LoginModal, LoginForm (provider dependent)
 - ❌ Templates: Default (provider dependent)
 

@@ -1,6 +1,7 @@
 // @ts-nocheck - React 19 type conflicts
 // import components
 import AuthClick from '@packages/components/molecules/AuthClick'
+import SwitchThemeMode from '@packages/components/molecules/SwitchThemeMode'
 
 export default async function Home() {
   return (
@@ -8,6 +9,8 @@ export default async function Home() {
       Welcome
       <br />
       <AuthClick />
+      <br />
+      <SwitchThemeMode />
     </>
   )
 }

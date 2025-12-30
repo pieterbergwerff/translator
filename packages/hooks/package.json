@@ -4,12 +4,24 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./useLocalStorage": "./src/useLocalStorage.ts"
+        "./useLocalStorage": "./src/useLocalStorage.ts",
+        "./useLogged.hook": "./src/useLogged.hook.ts",
+        "./useSettings.hook": "./src/useSettings.hook.ts",
+        "./*": "./src/*"
     },
     "typesVersions": {
         "*": {
             "useLocalStorage": [
                 "./src/useLocalStorage.ts"
+            ],
+            "useLogged.hook": [
+                "./src/useLogged.hook.ts"
+            ],
+            "useSettings.hook": [
+                "./src/useSettings.hook.ts"
+            ],
+            "*": [
+                "./src/*"
             ]
         }
     },
@@ -30,5 +42,8 @@
     },
     "peerDependencies": {
         "react": "^18.0.0"
+    },
+    "dependencies": {
+        "swr": "^2.3.8"
     }
 }
