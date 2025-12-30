@@ -344,6 +344,10 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 9. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
 10. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
 11. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
+12. **Playwright test selectors** - Use `page.getByLabel()` instead of `page.getByLabelText()` - the latter doesn't exist in Playwright's API
+13. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
+14. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
+15. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
 
 ## Component Creation Workflow
 
@@ -404,3 +408,47 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 - Turbo config: `turbo.json`
 - Test config: `tests/unit/vitest.config.ts`
 - ESLint flat config: `config/eslint/base.mjs`
+
+## Test Coverage Status
+
+### Unit Tests (111 tests passing)
+
+**Components** (18 test files):
+
+- ✅ All atoms: Button, Label, Input, Box, Form
+- ✅ All molecules: Dialog, AuthClick
+- ✅ All organisms: LoginModal, LoginForm
+- ✅ All templates: Default
+
+**Hooks**:
+
+- ✅ useLocalStorage
+
+**Utils**:
+
+- ✅ cn (common)
+- ✅ isString (common)
+
+**Validators**:
+
+- ✅ All validators: user, session, account, verification-token, translation
+
+### E2E Tests (Playwright)
+
+**Coverage**:
+
+- ✅ Homepage functionality
+- ✅ Authentication flow (login/logout)
+- ✅ Login modal interactions
+- ✅ Form validation
+
+### Storybook Stories
+
+**Coverage**:
+
+- ✅ Atoms: Button, Label, Input, Box, Form
+- ❌ Molecules: Dialog (complex), AuthClick (needs auth context)
+- ❌ Organisms: LoginModal, LoginForm (provider dependent)
+- ❌ Templates: Default (provider dependent)
+
+Note: Complex components requiring auth context or providers are intentionally excluded from Storybook as they cannot be properly demonstrated in isolation.
