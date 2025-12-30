@@ -4,6 +4,5 @@
   "compilerOptions": {
     "rootDir": "./src",
     "skipLibCheck": true
-  },
-  "references": [{ "path": "../types" }]
+  }
 }
