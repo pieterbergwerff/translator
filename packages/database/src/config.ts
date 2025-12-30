@@ -25,7 +25,7 @@ export interface DatabaseConfig {
 // Default configuration based on environment variables
 export const getDatabaseConfig = (): Knex.Config => {
   const config: DatabaseConfig = {
-    client: (process.env.DB_CLIENT as any) || 'sqlite3',
+    client: (process.env.DB_CLIENT as 'sqlite3' | 'pg' | 'mysql2') || 'sqlite3',
     connection: process.env.DB_CONNECTION || {
       filename: process.env.DB_FILENAME || './dev.sqlite3',
     },

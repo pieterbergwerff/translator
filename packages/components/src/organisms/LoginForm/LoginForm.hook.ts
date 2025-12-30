@@ -30,7 +30,9 @@ export const useLoginFormHook = ({ onSubmit }: { onSubmit?: () => void }) => {
 
       if (!result?.error) {
         router.refresh()
-        onSubmit && onSubmit()
+        if (onSubmit) {
+          onSubmit()
+        }
       } else {
         setError('Invalid credentials')
       }

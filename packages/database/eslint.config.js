@@ -1,3 +1,3 @@
-export default {
-  extends: ['@config/eslint/library.cjs'],
-}
+import baseConfig from '@config/eslint/base.mjs'
+
+export default baseConfig

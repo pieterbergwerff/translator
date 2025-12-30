@@ -1,3 +1,3 @@
-import { cn } from '@utils/common/cn'
+import cn from '@utils/common/cn'
 
 export { cn }
