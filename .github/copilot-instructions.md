@@ -6,14 +6,27 @@
 
 ### Critical Import Pattern
 
-**NEVER use barrel exports** - import directly from source files:
+**NO package-level barrel exports** - Each component/util/hook has its own index.ts, but NO package-wide barrel files:
 
 ```typescript
-import Button from '@packages/components/atoms/Button' // ✅ Correct
-import { LoginForm } from '@packages/components/organisms' // ❌ Wrong - no index.ts exports
+// ✅ CORRECT - Import from component folder (uses index.ts)
+import Button from '@packages/components/atoms/Button'
+import { LoginForm } from '@packages/components/organisms/LoginForm'
+import { UserSchema } from '@packages/validators/user.validator'
+
+// ❌ WRONG - Package-level barrel exports
+import { Button, LoginForm } from '@packages/components'
+import { UserSchema, AccountSchema } from '@packages/validators'
 ```
 
-Path mappings in `package.json` exports field enable this: `"./atoms/*": "./src/atoms/*/index.tsx"`
+**Critical Rules**:
+
+- Each component/util/hook folder HAS an `index.ts` that exports its own content
+- NEVER create package-level barrel files (e.g., `@packages/components/src/index.ts` that exports all components)
+- Import from the component folder path, not the package root
+- Component index.ts files export: `{ default, ComponentName }` and related items
+
+Path mappings in `package.json` exports field enable direct imports: `"./atoms/*": "./src/atoms/*/index.tsx"`
 
 ### Package Structure
 
@@ -83,6 +96,49 @@ export { buttonVariantsCva as buttonVariants } from './Button.cva'
 - Tasks defined in `turbo.json` with `dependsOn` chains
 
 **Nuclear Reset**: `npm run clean` - Removes all `node_modules/`, lock files, and `.turbo/` cache
+
+## Project Analysis Workflow
+
+**When asked to "analyse project"**, execute the following comprehensive analysis and fix all errors:
+
+1. **Type Check**: Run `npm run typecheck`
+   - Fix all TypeScript errors
+   - Ensure all types are properly defined
+   - Check for missing type imports
+
+2. **Lint Check**: Run `npm run lint`
+   - Fix all ESLint errors and warnings
+   - Apply auto-fixes where possible
+   - Ensure code style consistency
+
+3. **Test Suite**: Run `npm run test`
+   - Fix all failing tests
+   - Ensure all tests pass with proper coverage
+
+4. **Test Coverage Analysis**: Check for missing tests
+   - **Components**: Every component in `packages/components/src/` must have a test in `tests/unit/src/components/`
+   - **Utils**: Every utility in `utils/*/src/` must have a test in `tests/unit/src/utils/`
+   - **Hooks**: Every hook in `packages/hooks/src/` must have a test in `tests/unit/src/hooks/`
+   - **Database**: Database functions in `packages/database/src/` must have tests
+   - **Translate**: Translation utilities in `packages/translate/src/` must have tests
+   - **Validators**: Every validator in `packages/validators/src/` must have a test in `tests/unit/src/validators/`
+   - Create missing tests following existing test patterns
+
+5. **E2E Test Extension**: Review and extend end-to-end tests
+   - Check `tests/end-to-end/tests/` for coverage gaps
+   - Add new E2E tests for uncovered user flows
+   - Update existing tests if features have changed
+
+6. **Format**: Run `npm run format`
+   - Apply Prettier formatting to all files
+   - Ensure consistent code formatting
+
+7. **Build Verification**: Run `npm run build`
+   - Fix all build errors
+   - Ensure all packages build successfully
+   - Verify Turbo cache integrity
+
+**Continue iterating through steps 1-7 until all errors are resolved and the project is in a healthy state.**
 
 ## Critical Technology Patterns
 
@@ -181,7 +237,60 @@ ROOT_PASSWORD=admin123
 NEXTAUTH_SECRET=<generated>
 ```
 
+**Database Field Naming Convention**: All fields follow `[tableName]FieldName` pattern:
+
+```typescript
+// ✅ Correct - users table
+await knex.schema.createTable('users', (table) => {
+  table.string('userId').primary()
+  table.string('userName')
+  table.string('userEmail').unique()
+  table.timestamp('userEmailVerified')
+})
+
+// ✅ Correct - sessions table
+await knex.schema.createTable('sessions', (table) => {
+  table.string('sessionId').primary()
+  table.string('sessionToken').unique()
+  table.string('sessionUserId').references('userId').inTable('users')
+  table.timestamp('sessionExpires')
+})
+
+// ❌ Wrong - generic field names
+table.string('id') // Use 'userId', 'sessionId', etc.
+table.string('name') // Use 'userName', 'accountName', etc.
+table.string('email') // Use 'userEmail', etc.
+```
+
 Run migrations: `cd packages/database && npm run migrate`
+
+## Validation Layer
+
+**Zod schemas** with one schema per file following `[entity].validator.ts` naming:
+
+```typescript
+// packages/validators/src/user.validator.ts
+import { z } from 'zod'
+
+export const UserSchema = z.object({
+  userId: z.string().uuid(),
+  userName: z.string().min(1),
+  userEmail: z.string().email(),
+  // ... following [tableName]FieldName convention
+})
+
+export type User = z.infer<typeof UserSchema>
+
+export default UserSchema // ✅ Always default export the schema
+```
+
+**Import patterns**:
+
+```typescript
+// Direct import from specific validator
+import UserValidator from '@packages/validators/user.validator'
+import { UserSchema, type User } from '@packages/validators/user.validator'
+```
 
 ## Testing Patterns
 
@@ -203,7 +312,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Common Pitfalls
 
-1. **No barrel exports** - Never create `index.ts` files that re-export components
+1. **No package-level barrel exports** - Never create package-wide `index.ts` files (e.g., `@packages/components/src/index.ts`), but DO create folder-level index.ts for each component
 2. **PostCSS must be `.cjs`** - ESM projects need CommonJS extension for PostCSS config
 3. **JWT session required** - NextAuth Credentials provider fails without `session: { strategy: 'jwt' }`
 4. **React 19 only** - Project uses `useActionState` - ensure React 19 in test environments
@@ -233,6 +342,12 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
    import type { VariantProps } from 'class-variance-authority'
    ```
 
+4. Usage - Import from component folder:
+   ```typescript
+   import Card from '@packages/components/atoms/Card'
+   import { cardVariants } from '@packages/components/atoms/Card'
+   ```
+
 **Creating an organism with state** (e.g., ProfileForm):
 
 1. Create folder: `packages/components/src/organisms/ProfileForm/`
@@ -257,7 +372,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Key Files Reference
 
-- Component pattern: `packages/components/src/atoms/Button/index.tsx`
+- Component pattern: `packages/components/src/atoms/Button/Button.atom.tsx`
 - Auth setup: `apps/app/src/lib/auth.ts`
 - Theme tokens: `packages/theme/src/globals.css`
 - Turbo config: `turbo.json`
