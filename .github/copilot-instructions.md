@@ -129,29 +129,37 @@ export { buttonVariantsCva as buttonVariants } from './Button.cva'
    - Add new E2E tests for uncovered user flows
    - Update existing tests if features have changed
 
-6. **Format**: Run `npm run format`
+6. **Storybook Coverage Check**: Verify all components have Storybook stories
+   - Check `packages/components/src/` for all atoms, molecules, organisms, and templates
+   - Verify corresponding `.stories.tsx` files exist in `apps/storybook/src/`
+   - Create missing stories following existing story patterns (see [Button.stories.tsx](apps/storybook/src/Button.stories.tsx), [Input.stories.tsx](apps/storybook/src/Input.stories.tsx), [Label.stories.tsx](apps/storybook/src/Label.stories.tsx))
+   - Stories should demonstrate all component variants and states
+   - Exclude providers and complex organisms that require auth context
+
+7. **Format**: Run `npm run format`
    - Apply Prettier formatting to all files
    - Ensure consistent code formatting
 
-7. **Build Verification**: Run `npm run build`
+8. **Build Verification**: Run `npm run build`
    - Fix all build errors
    - Ensure all packages build successfully
    - Verify Turbo cache integrity
 
-8. **Re-verify Type and Lint**: After making changes, run validation again
+9. **Re-verify Type and Lint**: After making changes, run validation again
    - Run `npm run typecheck` to ensure no new type errors were introduced
    - Run `npm run lint` to ensure code style compliance
    - Fix any new errors before proceeding
 
-9. **Update Documentation**: Improve copilot-instructions.md based on findings
-   - Document any new patterns discovered during analysis
-   - Add common pitfalls encountered and their solutions
-   - Update technology patterns section if new best practices emerged
-   - Record any regressions found and their root causes
-   - Add troubleshooting steps for recurring issues
-   - Update version requirements if dependencies changed
+10. **Update Documentation**: Improve copilot-instructions.md based on findings
 
-**Continue iterating through steps 1-9 until all errors are resolved and the project is in a healthy state.**
+- Document any new patterns discovered during analysis
+- Add common pitfalls encountered and their solutions
+- Update technology patterns section if new best practices emerged
+- Record any regressions found and their root causes
+- Add troubleshooting steps for recurring issues
+- Update version requirements if dependencies changed
+
+**Continue iterating through steps 1-10 until all errors are resolved and the project is in a healthy state.**
 
 ## Critical Technology Patterns
 
@@ -331,6 +339,11 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 4. **React 19 only** - Project uses `useActionState` - ensure React 19 in test environments
 5. **Environment splitting** - Respect `@utils/client` vs `@utils/server` boundaries
 6. **Turbo outputs** - Empty builds need `outputs: []` in `turbo.json` (e.g., `@packages/database`)
+7. **Validator schemas have timestamps** - All database entity validators include `created_at` and `updated_at` Date fields - tests must include these
+8. **Validator exports configuration** - Packages with direct file imports (like validators) need both `exports` and `typesVersions` fields in package.json for TypeScript resolution
+9. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
+10. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
+11. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
 
 ## Component Creation Workflow
 
