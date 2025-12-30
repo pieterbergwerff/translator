@@ -5,6 +5,32 @@
     "type": "module",
     "main": "./src/index.ts",
     "types": "./src/index.ts",
+    "exports": {
+        "./user.validator": "./src/user.validator.ts",
+        "./session.validator": "./src/session.validator.ts",
+        "./account.validator": "./src/account.validator.ts",
+        "./verification-token.validator": "./src/verification-token.validator.ts",
+        "./translation.validator": "./src/translation.validator.ts"
+    },
+    "typesVersions": {
+        "*": {
+            "user.validator": [
+                "./src/user.validator.ts"
+            ],
+            "session.validator": [
+                "./src/session.validator.ts"
+            ],
+            "account.validator": [
+                "./src/account.validator.ts"
+            ],
+            "verification-token.validator": [
+                "./src/verification-token.validator.ts"
+            ],
+            "translation.validator": [
+                "./src/translation.validator.ts"
+            ]
+        }
+    },
     "scripts": {
         "clean": "rm -rf dist node_modules package-lock.json .turbo",
         "lint": "eslint . --max-warnings 0",

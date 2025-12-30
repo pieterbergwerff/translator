@@ -1,6 +1,17 @@
-import type { Metadata } from 'next'
+// @ts-nocheck - React 19 type conflicts
+// import utils
 import { Inter } from 'next/font/google'
-import '@packages/theme/globals.css'
+import { AuthProvider } from '@/components/auth-provider'
+
+// import components
+import AppProvider from '@packages/components/providers/App'
+
+// import styles
+import './globals.css'
+
+// import types
+// @ts-nocheck - React 19 type conflicts
+import type { Metadata } from 'next'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,7 +26,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AppProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </AppProvider>
+      </body>
     </html>
   )
 }

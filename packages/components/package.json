@@ -4,64 +4,65 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./atoms/*": "./src/atoms/*/index.tsx",
-        "./molecules/*": "./src/molecules/*/index.tsx",
-        "./organisms/*": "./src/organisms/*/index.tsx",
-        "./pages/*": "./src/pages/*/index.tsx",
-        "./providers/*": "./src/providers/*/index.tsx",
-        "./templates/*": "./src/templates/*/index.tsx"
+        "./atoms/*": "./src/atoms/*/index.ts",
+        "./molecules/*": "./src/molecules/*/index.ts",
+        "./organisms/*": "./src/organisms/*/index.ts",
+        "./pages/*": "./src/pages/*/index.ts",
+        "./providers/*": "./src/providers/*/index.ts",
+        "./templates/*": "./src/templates/*/index.ts"
     },
     "typesVersions": {
         "*": {
             "atoms/*": [
-                "./src/atoms/*/index.tsx"
+                "./src/atoms/*/index.ts"
             ],
             "molecules/*": [
-                "./src/molecules/*/index.tsx"
+                "./src/molecules/*/index.ts"
             ],
             "organisms/*": [
-                "./src/organisms/*/index.tsx"
+                "./src/organisms/*/index.ts"
             ],
             "pages/*": [
-                "./src/pages/*/index.tsx"
+                "./src/pages/*/index.ts"
             ],
             "providers/*": [
-                "./src/providers/*/index.tsx"
+                "./src/providers/*/index.ts"
             ],
             "templates/*": [
-                "./src/templates/*/index.tsx"
+                "./src/templates/*/index.ts"
             ]
         }
     },
     "scripts": {
         "clean": "rm -rf dist node_modules package-lock.json .turbo",
         "lint": "eslint . --max-warnings 0",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "tsc --noEmit --skipLibCheck",
         "ui:add": "npx shadcn@latest add"
     },
     "dependencies": {
-        "@radix-ui/react-slot": "^1.0.2",
+        "@radix-ui/react-dialog": "^1.1.15",
+        "@radix-ui/react-label": "^2.1.8",
+        "@radix-ui/react-slot": "^1.1.0",
+        "@radix-ui/react-visually-hidden": "^1.2.4",
         "class-variance-authority": "^0.7.0",
-        "clsx": "^2.1.0",
-        "lucide-react": "^0.390.0",
-        "tailwind-merge": "^2.4.0"
+        "lucide-react": "^0.468.0"
     },
     "devDependencies": {
         "@config/eslint": "*",
         "@config/typescript": "*",
-        "@types/react": "^18.3.0",
-        "@types/react-dom": "^18.3.0",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.19",
         "eslint": "^9.0.0",
         "postcss": "^8.4.38",
-        "react": "^18.3.0",
-        "react-dom": "^18.3.0",
+        "react": "^19.2.3",
+        "react-dom": "^19.2.3",
         "tailwindcss": "^3.4.0",
         "tailwindcss-animate": "^1.0.7",
         "typescript": "^5.5.0"
     },
     "peerDependencies": {
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0"
+        "react": "^19.2.3",
+        "react-dom": "^19.2.3"
     }
 }

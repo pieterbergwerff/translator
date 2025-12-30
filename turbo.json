@@ -60,6 +60,12 @@
                 "$TURBO_DEFAULT$",
                 "tsconfig.json"
             ]
+        },
+        "@apps/test-ui#build": {
+            "outputs": []
+        },
+        "@packages/database#build": {
+            "outputs": []
         }
     }
 }
