@@ -16,7 +16,7 @@ const nextConfig = {
   experimental: {
     esmExternals: true,
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Ignore optional database drivers that aren't installed
     config.externals = config.externals || []
     config.externals.push({
