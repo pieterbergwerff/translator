@@ -3,50 +3,50 @@ import type { Knex } from 'knex'
 export async function up(knex: Knex): Promise<void> {
   // Users table
   await knex.schema.createTable('users', (table) => {
-    table.string('id').primary()
-    table.string('name')
-    table.string('email').unique()
-    table.timestamp('emailVerified')
-    table.string('image')
+    table.string('userId').primary()
+    table.string('userName')
+    table.string('userEmail').unique()
+    table.timestamp('userEmailVerified')
+    table.string('userImage')
     table.timestamps(true, true)
   })
 
   // Accounts table
   await knex.schema.createTable('accounts', (table) => {
-    table.string('id').primary()
-    table.string('userId').references('id').inTable('users').onDelete('CASCADE')
-    table.string('type')
-    table.string('provider')
-    table.string('providerAccountId')
-    table.text('refresh_token')
-    table.text('access_token')
-    table.integer('expires_at')
-    table.string('token_type')
-    table.string('scope')
-    table.text('id_token')
-    table.string('session_state')
+    table.string('accountId').primary()
+    table.string('accountUserId').references('userId').inTable('users').onDelete('CASCADE')
+    table.string('accountType')
+    table.string('accountProvider')
+    table.string('accountProviderAccountId')
+    table.text('accountRefreshToken')
+    table.text('accountAccessToken')
+    table.integer('accountExpiresAt')
+    table.string('accountTokenType')
+    table.string('accountScope')
+    table.text('accountIdToken')
+    table.string('accountSessionState')
     table.timestamps(true, true)
 
-    table.unique(['provider', 'providerAccountId'])
+    table.unique(['accountProvider', 'accountProviderAccountId'])
   })
 
   // Sessions table
   await knex.schema.createTable('sessions', (table) => {
-    table.string('id').primary()
+    table.string('sessionId').primary()
     table.string('sessionToken').unique()
-    table.string('userId').references('id').inTable('users').onDelete('CASCADE')
-    table.timestamp('expires')
+    table.string('sessionUserId').references('userId').inTable('users').onDelete('CASCADE')
+    table.timestamp('sessionExpires')
     table.timestamps(true, true)
   })
 
   // Verification tokens table
   await knex.schema.createTable('verificationTokens', (table) => {
-    table.string('identifier')
-    table.string('token').unique()
-    table.timestamp('expires')
+    table.string('verificationTokenIdentifier')
+    table.string('verificationTokenToken').unique()
+    table.timestamp('verificationTokenExpires')
     table.timestamps(true, true)
 
-    table.unique(['identifier', 'token'])
+    table.unique(['verificationTokenIdentifier', 'verificationTokenToken'])
   })
 }
 
