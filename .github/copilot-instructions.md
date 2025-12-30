@@ -138,7 +138,12 @@ export { buttonVariantsCva as buttonVariants } from './Button.cva'
    - Ensure all packages build successfully
    - Verify Turbo cache integrity
 
-8. **Update Documentation**: Improve copilot-instructions.md based on findings
+8. **Re-verify Type and Lint**: After making changes, run validation again
+   - Run `npm run typecheck` to ensure no new type errors were introduced
+   - Run `npm run lint` to ensure code style compliance
+   - Fix any new errors before proceeding
+
+9. **Update Documentation**: Improve copilot-instructions.md based on findings
    - Document any new patterns discovered during analysis
    - Add common pitfalls encountered and their solutions
    - Update technology patterns section if new best practices emerged
@@ -146,7 +151,7 @@ export { buttonVariantsCva as buttonVariants } from './Button.cva'
    - Add troubleshooting steps for recurring issues
    - Update version requirements if dependencies changed
 
-**Continue iterating through steps 1-8 until all errors are resolved and the project is in a healthy state.**
+**Continue iterating through steps 1-9 until all errors are resolved and the project is in a healthy state.**
 
 ## Critical Technology Patterns
 
