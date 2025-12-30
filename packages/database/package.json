@@ -1,0 +1,32 @@
+{
+    "name": "@packages/database",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./knex": "./src/knex.ts",
+        "./migrate": "./src/migrate.ts"
+    },
+    "scripts": {
+        "build": "tsc --noEmit",
+        "clean": "rm -rf node_modules package-lock.json .turbo",
+        "lint": "eslint . --max-warnings 0",
+        "typecheck": "tsc --noEmit",
+        "migrate": "tsx src/migrate.ts"
+    },
+    "dependencies": {
+        "knex": "^3.1.0",
+        "sqlite3": "^5.1.7",
+        "pg": "^8.11.3",
+        "mysql2": "^3.6.5"
+    },
+    "devDependencies": {
+        "@config/eslint": "*",
+        "@config/typescript": "*",
+        "@types/sqlite3": "^3.1.11",
+        "@types/pg": "^8.10.9",
+        "typescript": "^5.5.0",
+        "tsx": "^4.7.0",
+        "eslint": "^9.0.0"
+    }
+}
