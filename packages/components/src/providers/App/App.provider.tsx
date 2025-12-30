@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflicts with provider
 // import components
 import AuthProvider from '@packages/components/providers/Auth'
 

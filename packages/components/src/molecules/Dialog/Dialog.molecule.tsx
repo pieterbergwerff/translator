@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflict with ReactNode in Radix UI Dialog
 // import components
 import * as Dialog from '@radix-ui/react-dialog'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'

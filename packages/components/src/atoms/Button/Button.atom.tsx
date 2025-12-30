@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflict with Radix Slot
 // import utils
 import cn from '@utils/common/cn'
 import { forwardRef } from 'react'

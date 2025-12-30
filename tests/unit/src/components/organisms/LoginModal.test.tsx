@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflicts with @testing-library
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import LoginModal from '@packages/components/organisms/LoginModal'

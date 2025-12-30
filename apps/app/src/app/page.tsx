@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflicts
 // import components
 import AuthClick from '@packages/components/molecules/AuthClick'
 

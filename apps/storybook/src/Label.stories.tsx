@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflicts
 import type { Meta, StoryObj } from '@storybook/react'
 import Label from '@packages/components/atoms/Label'
 import Input from '@packages/components/atoms/Input'

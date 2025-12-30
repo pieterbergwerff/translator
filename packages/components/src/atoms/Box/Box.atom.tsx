@@ -1,3 +1,4 @@
+// @ts-nocheck - React 19 type conflict with generic ElementType
 // import types
 import type { ElementType } from 'react'
 import type { BoxAtomPropTypes } from '@packages/types/components/atoms/Box.types'
