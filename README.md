@@ -116,7 +116,7 @@ Workspace packages use `"*"` version references:
 // ✅ Correct
 import Button from '@packages/components/atoms/Button'
 import isString from '@utils/common/string/isString'
-import { UserSchema } from '@packages/validators/entities'
+import { UserSchema } from '@packages/validators/user.validator'
 
 // ❌ Wrong - No barrel exports exist
 import { Button } from '@packages/components'
