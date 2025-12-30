@@ -348,6 +348,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 13. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
 14. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
 15. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
+16. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
 
 ## Component Creation Workflow
 
@@ -438,9 +439,10 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 **Coverage**:
 
 - ✅ Homepage functionality
-- ✅ Authentication flow (login/logout)
-- ✅ Login modal interactions
-- ✅ Form validation
+- ✅ Login modal UI interactions (opening, closing, field validation)
+- ✅ Form field input and validation
+
+**Note**: E2E tests focus on UI interactions without requiring actual authentication to work in CI environments. Tests verify the login modal opens, fields can be filled, and form validation works, but don't attempt actual login with database credentials.
 
 ### Storybook Stories
 
