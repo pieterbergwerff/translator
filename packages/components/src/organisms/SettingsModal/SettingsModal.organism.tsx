@@ -14,8 +14,11 @@ import type { FC } from 'react'
 
 export const SettingsModalOrganismComponent: FC = () => {
   const [modalOpen, setModalOpen] = useState(false)
+
+  // Listen for keyboard shortcut (Cmd/Ctrl + ,)
   useSettingsShortcut({ eventName: 'app:open-settings' })
 
+  // Listen for custom event from UI buttons
   useEffect(() => {
     const onOpen = () => {
       setModalOpen(true)
@@ -25,7 +28,6 @@ export const SettingsModalOrganismComponent: FC = () => {
 
     return () => {
       window.removeEventListener('app:open-settings', onOpen)
-      setModalOpen(false)
     }
   }, [])
 
@@ -34,7 +36,7 @@ export const SettingsModalOrganismComponent: FC = () => {
       open={modalOpen}
       title="Settings"
       description="Adjust your application settings"
-      onClose={() => setModalOpen(false)}
+      onClose={setModalOpen}
     >
       <Label>Theme Mode</Label>
       <SwitchThemeMode />

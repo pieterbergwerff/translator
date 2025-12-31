@@ -15,7 +15,7 @@ export const LoginModalOrganismComponent: FC = () => {
   const { loginModalOpen, setLoginModalOpen } = useAuthContext()
 
   return (
-    <Dialog open={loginModalOpen} onClose={() => setLoginModalOpen(false)}>
+    <Dialog open={loginModalOpen} onClose={setLoginModalOpen}>
       <LoginForm onSubmit={() => setLoginModalOpen(false)} />
     </Dialog>
   )
