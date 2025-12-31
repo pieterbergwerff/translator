@@ -370,16 +370,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 17. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
 18. **TypeScript rootDir requirement** - Packages using direct file exports in `exports` field must specify `rootDir` in tsconfig.json to avoid ambiguous project root errors
 19. **Redundant boolean casts** - ESLint will flag `!!variable` as redundant - use `variable` directly when the value is already truthy/falsy
-20. **Validator schemas have timestamps** - All database entity validators include `created_at` and `updated_at` Date fields - tests must include these
-21. **Validator exports configuration** - Packages with direct file imports (like validators) need both `exports` and `typesVersions` fields in package.json for TypeScript resolution
-22. **cn utility behavior** - The `cn()` function (clsx + twMerge) only deduplicates Tailwind class conflicts, NOT generic duplicate class names
-23. **useLocalStorage undefined handling** - Hook JSON.stringifies all values including undefined (becomes string "undefined"), doesn't remove items
-24. **Test imports require explicit package exports** - For packages without barrel exports, add `exports` field mapping each file (e.g., `"./user.validator": "./src/user.validator.ts"`)
-25. **Playwright test selectors** - Use `page.getByLabel()` instead of `page.getByLabelText()` - the latter doesn't exist in Playwright's API
-26. **Storybook story patterns** - Stories for atoms like Box and Form should include multiple variants demonstrating different use cases and props
-27. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
-28. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
-29. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
+20. **window.matchMedia mock required** - Test environments must mock `window.matchMedia` in vitest.setup.ts for components that check media queries (see vitest.setup.ts for implementation)
 
 ## Component Creation Workflow
 

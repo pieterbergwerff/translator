@@ -85,13 +85,9 @@ describe('SwitchThemeMode Component', () => {
       value: 'system',
       setValue: mockSetValue,
     })
-    render(<SwitchThemeMode />)
-    const systemButton = screen.getByText('System')
-    const lightButton = screen.getByText('Light')
-    const darkButton = screen.getByText('Dark')
-    expect(systemButton).toBeDisabled()
-    expect(lightButton).toBeDisabled()
-    expect(darkButton).toBeDisabled()
+    const { container } = render(<SwitchThemeMode />)
+    // When loading, component returns null - so nothing should be rendered
+    expect(container).toBeEmptyDOMElement()
   })
 
   it('handles empty value change gracefully', async () => {
