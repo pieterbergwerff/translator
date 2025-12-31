@@ -1,4 +1,3 @@
-// Placeholder for future server-only utilities
-// Example: database connections, API helpers, server middleware
-
-export {}
+// Server-only utilities
+export { auth, authOptions, authConfig, signOut } from './auth'
+export { default as authHandler } from './auth'

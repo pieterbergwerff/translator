@@ -54,6 +54,7 @@ export const useSettings = (settingName: string, defaultValue?: string) => {
 
       await upsertSetting({
         settingsId: existingSetting?.settingsId ?? crypto.randomUUID(),
+        settingsUserId: existingSetting?.settingsUserId ?? crypto.randomUUID(),
         settingsName: settingName,
         settingsValue: newValue,
       })

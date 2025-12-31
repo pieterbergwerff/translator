@@ -1,7 +1,8 @@
 'use server'
 
-// import database
+// import utils
 import db from '@packages/database/knex'
+import getSession from '@utils/server/getSession.util.ts'
 
 // import types
 import { Settings } from '@packages/validators/settings.validator'
@@ -10,11 +11,16 @@ export const setSettingsAction = async (
   settingsName: string,
   settingsValue: string
 ): Promise<Settings | null> => {
-  const result = await db('settings').where({ settingsName }).first()
+  const session = await getSession()
+  if (!session?.user?.id) return null
+
+  const result = await db('settings')
+    .where({ settingsName, settingsUserId: session.user.id })
+    .first()
   if (result) {
     // Update existing setting
     const updatedSetting = await db('settings')
-      .where({ settingsName })
+      .where({ settingsName, settingsUserId: session.user.id })
       .update({ settingsValue })
       .returning('*')
     return updatedSetting[0] ?? null
@@ -22,6 +28,7 @@ export const setSettingsAction = async (
     // Insert new setting
     const newSetting: Settings = {
       settingsId: crypto.randomUUID(),
+      settingsUserId: session.user.id,
       settingsName,
       settingsValue,
       created_at: new Date(),

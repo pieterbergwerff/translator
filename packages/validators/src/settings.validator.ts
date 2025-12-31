@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 export const SettingsSchema = z.object({
   settingsId: z.string().uuid(),
+  settingsUserId: z.string().uuid(),
   settingsName: z.string(),
   settingsValue: z.any(),
   created_at: z.date(),
