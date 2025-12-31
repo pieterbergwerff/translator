@@ -7,7 +7,7 @@ import { AuthProvider } from '@/components/auth-provider'
 import AppProvider from '@packages/components/providers/App'
 
 // import styles
-import './globals.css'
+import '@packages/theme/globals.css'
 
 // import types
 // @ts-nocheck - React 19 type conflicts
