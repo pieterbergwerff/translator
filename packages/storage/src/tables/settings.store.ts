@@ -45,3 +45,7 @@ export const upsertSetting = async (
 export const getSetting = async (settingsName: string) => {
   return await settingsTable.get({ settingsName })
 }
+
+export const dropTableIfExists = async () => {
+  await db.table('settings').clear()
+}

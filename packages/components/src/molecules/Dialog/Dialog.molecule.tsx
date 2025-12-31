@@ -29,10 +29,14 @@ export const DialogMoleculeComponent: FC<
               <Dialog.Title> </Dialog.Title>
             </VisuallyHidden.Root>
           )}
-          {description?.trim() && (
+          {description?.trim() ? (
             <Dialog.Description className="text-sm text-muted-foreground">
               {description}
             </Dialog.Description>
+          ) : (
+            <VisuallyHidden.Root asChild>
+              <Dialog.Description> </Dialog.Description>
+            </VisuallyHidden.Root>
           )}
         </div>
         {children}

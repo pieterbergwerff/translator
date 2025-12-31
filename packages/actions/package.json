@@ -1,0 +1,31 @@
+{
+    "name": "@packages/actions",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./*": "./src/*"
+    },
+    "typesVersions": {
+        "*": {
+            "*": [
+                "./src/*"
+            ]
+        }
+    },
+    "scripts": {
+        "clean": "rm -rf dist node_modules package-lock.json .turbo",
+        "lint": "eslint . --max-warnings 0",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@packages/database": "*",
+        "@packages/validators": "*"
+    },
+    "devDependencies": {
+        "@config/eslint": "*",
+        "@config/typescript": "*",
+        "eslint": "^9.0.0",
+        "typescript": "^5.0.0"
+    }
+}
