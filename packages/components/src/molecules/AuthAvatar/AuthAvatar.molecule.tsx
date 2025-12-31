@@ -11,7 +11,7 @@ import Menubar, {
   MenubarSeparator,
 } from '@packages/components/molecules/Menubar'
 import MenuItemSignOut from './components/MenuItemSignOut'
-import { User, Settings, LogOut } from 'lucide-react'
+import { User, Settings } from 'lucide-react'
 
 export const AuthAvatarMoleculeComponent = async () => {
   const session = await getSession()

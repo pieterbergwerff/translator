@@ -22,8 +22,15 @@ export const useAuthContext = () => {
   return context
 }
 
-export const AuthProviderClientComponent: FC<PropsWithChildren> = ({ children }) => {
-  const ctx = useAuth()
+interface AuthProviderProps extends PropsWithChildren {
+  initialLoginModalOpen?: boolean
+}
+
+export const AuthProviderClientComponent: FC<AuthProviderProps> = ({
+  children,
+  initialLoginModalOpen = false,
+}) => {
+  const ctx = useAuth(initialLoginModalOpen)
 
   return (
     <SessionProvider>

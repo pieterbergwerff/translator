@@ -1,8 +1,8 @@
 // import hooks
 import { useState } from 'react'
 
-export const useAuthClient = () => {
-  const [loginModalOpen, setLoginModalOpen] = useState(false)
+export const useAuthClient = (initialLoginModalOpen = false) => {
+  const [loginModalOpen, setLoginModalOpen] = useState(initialLoginModalOpen)
 
   return { loginModalOpen, setLoginModalOpen }
 }
