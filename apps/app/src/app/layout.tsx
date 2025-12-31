@@ -1,7 +1,9 @@
 // @ts-nocheck - React 19 type conflicts
 // import utils
 import { Inter } from 'next/font/google'
-import { AuthProvider } from '@/components/auth-provider'
+
+// import actions
+import getSettingsAction from '@packages/actions/settings/get-settings.action'
 
 // import components
 import AppProvider from '@packages/components/providers/App'
@@ -23,13 +25,17 @@ export const metadata: Metadata = {
   description: 'Translation application',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const userSettings = await getSettingsAction('theme-mode')
+  const themeMode = userSettings?.settingsValue || 'system'
+
   return (
-    <html lang="en" className={inter.variable}>
+    <html
+      lang="en"
+      className={[inter.variable, ...(themeMode === 'dark' ? ['dark'] : [])].join(' ')}
+    >
       <body className={inter.className}>
-        <AppProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </AppProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   )

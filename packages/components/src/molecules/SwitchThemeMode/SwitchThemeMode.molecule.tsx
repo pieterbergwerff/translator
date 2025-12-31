@@ -43,6 +43,7 @@ export const SwitchThemeModeMolecule = () => {
       onValueChange={(value: string) => setThemeMode(value || 'system')}
       variant="outline"
       size="sm"
+      className="justify-start"
     >
       <ToggleGroupItem value="system">System</ToggleGroupItem>
       <ToggleGroupItem value="light">Light</ToggleGroupItem>

@@ -5,15 +5,15 @@
     "type": "module",
     "exports": {
         "./cn": "./src/cn.ts",
-        "./string/*": "./src/string/*.ts"
+        "./string/isString": "./src/string/isString.ts"
     },
     "typesVersions": {
         "*": {
             "cn": [
                 "./src/cn.ts"
             ],
-            "string/*": [
-                "./src/string/*.ts"
+            "string/isString": [
+                "./src/string/isString.ts"
             ]
         }
     },

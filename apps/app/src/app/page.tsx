@@ -1,16 +1,12 @@
-// @ts-nocheck - React 19 type conflicts
 // import components
-import AuthClick from '@packages/components/molecules/AuthClick'
-import SwitchThemeMode from '@packages/components/molecules/SwitchThemeMode'
+import DefaultTemplate from '@packages/components/templates/Default'
 
 export default async function Home() {
   return (
-    <>
-      Welcome
-      <br />
-      <AuthClick />
-      <br />
-      <SwitchThemeMode />
-    </>
+    <DefaultTemplate>
+      <div className="flex min-h-screen items-center justify-center">
+        <h1 className="text-4xl font-bold">Welcome</h1>
+      </div>
+    </DefaultTemplate>
   )
 }

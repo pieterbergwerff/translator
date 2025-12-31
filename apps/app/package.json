@@ -12,6 +12,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@packages/actions": "*",
         "@packages/components": "*",
         "@packages/constants": "*",
         "@packages/database": "*",

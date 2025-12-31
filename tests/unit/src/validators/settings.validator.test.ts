@@ -5,6 +5,7 @@ describe('SettingsValidator', () => {
   it('validates a valid settings object', () => {
     const validSettings = {
       settingsId: '550e8400-e29b-41d4-a716-446655440000',
+      settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
       settingsName: 'theme-mode',
       settingsValue: 'dark',
       created_at: new Date(),
@@ -18,6 +19,7 @@ describe('SettingsValidator', () => {
   it('validates settings with different value types', () => {
     const validSettings = {
       settingsId: '550e8400-e29b-41d4-a716-446655440000',
+      settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
       settingsName: 'notifications',
       settingsValue: { email: true, push: false },
       created_at: new Date(),
@@ -31,6 +33,7 @@ describe('SettingsValidator', () => {
   it('rejects settings with invalid settingsId format', () => {
     const invalidSettings = {
       settingsId: 'invalid-uuid',
+      settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
       settingsName: 'theme',
       settingsValue: 'light',
       created_at: new Date(),
@@ -44,6 +47,7 @@ describe('SettingsValidator', () => {
   it('rejects settings with missing settingsName', () => {
     const invalidSettings = {
       settingsId: '550e8400-e29b-41d4-a716-446655440000',
+      settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
       settingsValue: 'value',
       created_at: new Date(),
       updated_at: new Date(),
@@ -56,6 +60,7 @@ describe('SettingsValidator', () => {
   it('rejects settings with missing required timestamps', () => {
     const invalidSettings = {
       settingsId: '550e8400-e29b-41d4-a716-446655440000',
+      settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
       settingsName: 'theme',
       settingsValue: 'dark',
     }
@@ -70,6 +75,7 @@ describe('SettingsValidator', () => {
     testValues.forEach((value) => {
       const settings = {
         settingsId: '550e8400-e29b-41d4-a716-446655440000',
+        settingsUserId: '660e8400-e29b-41d4-a716-446655440000',
         settingsName: 'test-setting',
         settingsValue: value,
         created_at: new Date(),

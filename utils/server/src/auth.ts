@@ -1,6 +1,7 @@
 import NextAuth, { getServerSession } from 'next-auth'
 import type { NextAuthOptions } from 'next-auth'
 import { db } from '@packages/database/knex'
+import '@packages/types/auth'
 
 import CredentialsProvider from 'next-auth/providers/credentials'
 

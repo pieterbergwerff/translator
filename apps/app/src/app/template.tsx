@@ -1,4 +1,3 @@
-// @ts-nocheck - React 19 type conflicts
 // import components
 import Template from '@packages/components/templates/Default'
 

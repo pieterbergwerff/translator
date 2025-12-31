@@ -1,1 +1,1 @@
-export { default, AuthProviderComponent, useAuthContext } from './Auth.provider'
+export { default, AuthProviderComponent } from './Auth.provider'
