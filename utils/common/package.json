@@ -4,12 +4,16 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./*": "./src/*"
+        "./cn": "./src/cn.ts",
+        "./string/isString": "./src/string/isString.ts"
     },
     "typesVersions": {
         "*": {
-            "*": [
-                "./src/*"
+            "cn": [
+                "./src/cn.ts"
+            ],
+            "string/isString": [
+                "./src/string/isString.ts"
             ]
         }
     },

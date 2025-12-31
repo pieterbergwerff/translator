@@ -12,12 +12,15 @@ import Menubar, {
 } from '@packages/components/molecules/Menubar'
 import MenuItemSignOut from './components/MenuItemSignOut'
 import MenuItemSettings from './components/MenuItemSettings'
+import LoginButton from './components/LoginButton'
 import { User } from 'lucide-react'
 
 export const AuthAvatarMoleculeComponent = async () => {
   const session = await getSession()
 
-  if (!session) return null
+  if (!session) {
+    return <LoginButton />
+  }
 
   return (
     <Menubar className="border-none bg-transparent p-0 h-auto">

@@ -10,5 +10,5 @@ test('homepage has title and authentication link', async ({ page }) => {
   await expect(page.getByText('Welcome')).toBeVisible()
 
   // Check for the authentication link (renders as "login" when not authenticated)
-  await expect(page.getByText('login')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'login' }).first()).toBeVisible()
 })

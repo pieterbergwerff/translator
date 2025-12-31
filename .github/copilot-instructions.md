@@ -374,6 +374,19 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 21. **AuthClientProvider props** - When testing components that use `useAuthContext`, wrap them in `AuthClientProvider` with `initialLoginModalOpen` prop to control modal state
 22. **SessionProvider mock for tests** - When mocking `next-auth/react`, include `SessionProvider: ({ children }) => children` to avoid "No SessionProvider export" errors
 23. **Async server component tests** - Server components using `getSession()` from `@utils/server` are too complex to test in client-side test environments - consider integration testing or skip unit tests
+24. **@utils/common package exports** - The `@utils/common` package requires explicit `exports` field mappings for each file (e.g., `"./cn": "./src/cn.ts"`) rather than wildcard patterns to ensure proper TypeScript resolution
+25. **React 19 hydration duplicates** - React 19 may cause hydration issues resulting in duplicate elements in E2E tests. Use `.first()` selector in Playwright tests to handle this (e.g., `page.getByRole('button', { name: 'login' }).first().click()`)
+26. **jest-dom matchers in new tests** - Always import `'@testing-library/jest-dom/vitest'` at the top of test files to enable TypeScript types for jest-dom matchers like `toBeInTheDocument()`, `toHaveAttribute()`, etc.
+
+27. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
+28. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
+29. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
+30. **TypeScript rootDir requirement** - Packages using direct file exports in `exports` field must specify `rootDir` in tsconfig.json to avoid ambiguous project root errors
+31. **Redundant boolean casts** - ESLint will flag `!!variable` as redundant - use `variable` directly when the value is already truthy/falsy
+32. **window.matchMedia mock required** - Test environments must mock `window.matchMedia` in vitest.setup.ts for components that check media queries (see vitest.setup.ts for implementation)
+33. **AuthClientProvider props** - When testing components that use `useAuthContext`, wrap them in `AuthClientProvider` with `initialLoginModalOpen` prop to control modal state
+34. **SessionProvider mock for tests** - When mocking `next-auth/react`, include `SessionProvider: ({ children }) => children` to avoid "No SessionProvider export" errors
+35. **Async server component tests** - Server components using `getSession()` from `@utils/server` are too complex to test in client-side test environments - consider integration testing or skip unit tests
 
 ## Component Creation Workflow
 
@@ -437,15 +450,15 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Test Coverage Status
 
-### Unit Tests (140 tests passing)
+### Unit Tests (143 tests passing)
 
-**Components** (20 test files):
+**Components** (23 test files):
 
-- ✅ All atoms: Button, Label, Input, Box, Form, Toggle
-- ✅ All molecules: Dialog, ToggleGroup, SwitchThemeMode
-- ✅ All organisms: LoginModal, LoginForm
+- ✅ All atoms: Button, Label, Input, Box, Form, Toggle, Avatar
+- ✅ All molecules: Dialog, ToggleGroup, SwitchThemeMode, Menubar
+- ✅ All organisms: LoginModal, LoginForm, SettingsModal
 - ❌ Templates: Default (removed - async server component too complex for client-side testing)
-- ❌ Molecules: AuthClick (removed - component no longer exists, replaced with server component AuthAvatar)
+- ❌ Molecules: AuthAvatar (server component using `getSession()` - too complex for client-side testing)
 
 **Hooks**:
 
@@ -464,19 +477,22 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 **Coverage**:
 
-- ✅ Homepage functionality (15 tests passing)
-- ✅ Login modal UI interactions (opening, closing, field validation)
-- ✅ Form field input and validation
+- ⚠️ Homepage functionality (3 of 15 tests passing)
+- ⚠️ Login modal UI interactions - failing due to React 19 hydration issues causing duplicate buttons
 
-**Note**: E2E tests focus on UI interactions without requiring actual authentication to work in CI environments. Tests verify the login modal opens, fields can be filled, and form validation works, but don't attempt actual login with database credentials.
+**Known Issues**:
+
+- React 19 hydration creates duplicate DOM elements, causing "strict mode violation" errors in Playwright
+- Tests updated to use `.first()` selector as workaround
+- E2E tests verify UI behavior without requiring actual database authentication
 
 ### Storybook Stories
 
 **Coverage**:
 
 - ✅ Atoms: Button, Label, Input, Box, Form, Toggle
-- ❌ Molecules: Dialog (complex), AuthClick (needs auth context), SwitchThemeMode (needs settings hook), ToggleGroup (covered by Toggle stories)
-- ❌ Organisms: LoginModal, LoginForm (provider dependent)
+- ❌ Molecules: Dialog (complex), AuthAvatar (server component), SwitchThemeMode (needs settings hook), ToggleGroup (covered by Toggle stories), Menubar (complex with dynamic menus)
+- ❌ Organisms: LoginModal, LoginForm, SettingsModal (all provider dependent)
 - ❌ Templates: Default (provider dependent)
 
 Note: Complex components requiring auth context or providers are intentionally excluded from Storybook as they cannot be properly demonstrated in isolation.

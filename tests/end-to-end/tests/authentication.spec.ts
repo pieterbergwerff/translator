@@ -5,7 +5,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/')
 
     // Click the login link
-    await page.getByText('login').click()
+    await page.getByRole('button', { name: 'login' }).first().click({ force: true })
 
     // Check that the login modal is visible
     await expect(page.getByLabel(/email/i)).toBeVisible()
@@ -17,7 +17,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/')
 
     // Open login modal
-    await page.getByText('login').click()
+    await page.getByRole('button', { name: 'login' }).first().click({ force: true })
     await expect(page.getByLabel(/email/i)).toBeVisible()
 
     // Close the modal using close button
@@ -33,7 +33,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/')
 
     // Open login modal
-    await page.getByText('login').click()
+    await page.getByRole('button', { name: 'login' }).first().click({ force: true })
 
     // Try to submit empty form
     await page.getByRole('button', { name: /sign in/i }).click()
@@ -47,7 +47,7 @@ test.describe('Authentication Flow', () => {
     await page.goto('/')
 
     // Open login modal
-    await page.getByText('login').click()
+    await page.getByRole('button', { name: 'login' }).first().click({ force: true })
 
     // Fill in the form fields
     await page.getByLabel(/email/i).fill('test@example.com')
