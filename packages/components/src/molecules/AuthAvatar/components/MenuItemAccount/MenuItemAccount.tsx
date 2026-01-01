@@ -20,6 +20,7 @@ export const MenuItemAccountComponent: FC = () => {
         openModal(<AccountModalContents />, {
           title: 'Account',
           description: 'Manage your account settings and preferences.',
+          autoClose: false,
         })
       }
     >

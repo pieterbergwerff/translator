@@ -4,15 +4,19 @@ import { useSession } from 'next-auth/react'
 // import types
 import type { AuthUser } from '@packages/types/auth'
 
-export const useLogged = (): AuthUser | null => {
+export const useLogged = (): { user: AuthUser | null; update: () => Promise<void> } => {
   const session = useSession()
   const user = session.status === 'authenticated' ? session.data.user : null
 
-  if (user && 'id' in user) {
-    return user as AuthUser
+  const updateSession = async () => {
+    await session.update()
   }
 
-  return null
+  if (user && 'id' in user) {
+    return { user: user as AuthUser, update: updateSession }
+  }
+
+  return { user: null, update: updateSession }
 }
 
 export default useLogged

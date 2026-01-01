@@ -19,10 +19,6 @@ import { User, MenuIcon } from 'lucide-react'
 export const AuthAvatarMoleculeComponent = async () => {
   const session = await getSession()
 
-  //   if (!session) {
-  //     return <LoginButton />
-  //   }
-
   return (
     <Menubar className="border-none bg-transparent p-0 h-auto">
       <MenubarMenu>
@@ -37,9 +33,8 @@ export const AuthAvatarMoleculeComponent = async () => {
           {session ? (
             <>
               <MenubarItem disabled className="font-medium">
-                {session.user?.name || session.user?.email}
+                {session?.user?.userName || session?.user?.userEmail}
               </MenubarItem>
-              <MenubarSeparator />
               <MenuItemAccount />
               <MenuItemSettings />
               <MenuItemSignOut />
