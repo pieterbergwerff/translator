@@ -81,6 +81,11 @@ declare module 'next-auth' {
   interface Session {
     user: {
       id: string
+      userId: string
+      userName: string
+      userEmail: string
+      userEmailVerified?: Date | null
+      userImage?: string | null
     } & DefaultSession['user']
   }
 
@@ -96,5 +101,10 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     id: string
+    userId: string
+    userName: string
+    userEmail: string
+    userEmailVerified?: Date | null
+    userImage?: string | null
   }
 }

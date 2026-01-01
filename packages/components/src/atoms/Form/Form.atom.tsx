@@ -3,20 +3,32 @@ import cn from '@utils/common/cn'
 
 // import components
 import Box from '@packages/components/atoms/Box'
+import ButtonGroup from '@packages/components/molecules/ButtonGroup'
+import Button from '@packages/components/atoms/Button'
 
 // import types
-import type { FC, PropsWithChildren } from 'react'
+import type { FC, PropsWithChildren, FormEventHandler } from 'react'
 import type { FormAtomPropTypes } from '@packages/types/components/atoms/Form.types'
 import type BoxAtomPropTypes from '@packages/types/components/atoms/Box.types'
 
-type FormAtomComponentType = FC<FormAtomPropTypes> & {
-  Element: FC<PropsWithChildren<BoxAtomPropTypes>>
-}
+type FormAtomComponentType = FC<
+  FormAtomPropTypes & {
+    onSubmit?: FormEventHandler<HTMLFormElement>
+    submitText?: string
+    onCancel?: () => void
+    cancelText?: string
+  }
+> & { Element: FC<PropsWithChildren<BoxAtomPropTypes>> }
 
 export const FormAtomComponent: FormAtomComponentType = ({
   title,
   description,
   className,
+  children,
+  onSubmit,
+  submitText = 'Submit',
+  onCancel,
+  cancelText = 'Cancel',
   ...props
 }) => {
   return (
@@ -27,7 +39,23 @@ export const FormAtomComponent: FormAtomComponentType = ({
           {description?.trim() && <p className="text-muted-foreground">{description}</p>}
         </Box>
       ) : null}
-      <Box {...props} component="form" className={cn('space-y-4', className)} />
+      <Box {...props} component="form" className={cn('space-y-4', className)} onSubmit={onSubmit}>
+        {children}
+        {onSubmit || onCancel ? (
+          <ButtonGroup>
+            {!!onCancel && (
+              <Button type="button" disabled={false} variant="secondary" onClick={onCancel}>
+                {cancelText}
+              </Button>
+            )}
+            {!!onSubmit && (
+              <Button type="submit" disabled={false} variant="outline">
+                {submitText}
+              </Button>
+            )}
+          </ButtonGroup>
+        ) : null}
+      </Box>
     </Box>
   )
 }

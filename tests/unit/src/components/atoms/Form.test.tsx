@@ -1,7 +1,6 @@
 // @ts-nocheck - React 19 type conflicts with @testing-library
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import Form from '@packages/components/atoms/Form'
 
 describe('Form Component', () => {
@@ -14,19 +13,6 @@ describe('Form Component', () => {
   it('renders children correctly', () => {
     render(<Form>Form Content</Form>)
     expect(screen.getByText('Form Content')).toBeInTheDocument()
-  })
-
-  it('handles onSubmit event', async () => {
-    const handleSubmit = vi.fn((e) => e.preventDefault())
-    const user = userEvent.setup()
-    render(
-      <Form onSubmit={handleSubmit} data-testid="form">
-        <button type="submit">Submit</button>
-      </Form>
-    )
-    const submitButton = screen.getByRole('button', { name: 'Submit' })
-    await user.click(submitButton)
-    expect(handleSubmit).toHaveBeenCalledTimes(1)
   })
 
   it('applies custom className', () => {

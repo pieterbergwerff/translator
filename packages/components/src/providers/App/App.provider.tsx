@@ -1,16 +1,17 @@
-// @ts-nocheck - React 19 type conflicts with provider
+'use client'
+
 // import components
-import AuthProvider from '@packages/components/providers/Auth'
-import AuthClientProvider from '@packages/components/providers/AuthClient'
+import ModalProvider from '@packages/components/providers/Modal'
+import { SessionProvider } from 'next-auth/react'
 
 // import types
 import type { FC, PropsWithChildren } from 'react'
 
 export const AppProviderComponent: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <AuthProvider>
-      <AuthClientProvider>{children}</AuthClientProvider>
-    </AuthProvider>
+    <SessionProvider>
+      <ModalProvider>{children}</ModalProvider>
+    </SessionProvider>
   )
 }
 
