@@ -13,6 +13,7 @@ import Menubar, {
 import MenuItemSignOut from './components/MenuItemSignOut'
 import MenuItemSettings from './components/MenuItemSettings'
 import MenuItemLogin from './components/MenuItemLogin'
+import MenuItemAccount from './components/MenuItemAccount'
 import { User, MenuIcon } from 'lucide-react'
 
 export const AuthAvatarMoleculeComponent = async () => {
@@ -39,6 +40,7 @@ export const AuthAvatarMoleculeComponent = async () => {
                 {session.user?.name || session.user?.email}
               </MenubarItem>
               <MenubarSeparator />
+              <MenuItemAccount />
               <MenuItemSettings />
               <MenuItemSignOut />
             </>

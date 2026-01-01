@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react'
 // import hooks
 import { useState, startTransition, useActionState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useModalContext } from '@packages/components/providers/Modal'
 
 // import types
 import type { FormEvent } from 'react'
@@ -13,8 +14,9 @@ type LoginFormDataType = {
   password: string
 }
 
-export const useLoginFormHook = ({ onSubmit }: { onSubmit?: () => void }) => {
+export const useLoginModalContentsHook = () => {
   const router = useRouter()
+  const { closeModal } = useModalContext()
 
   const [email, setEmail] = useState('admin@example.com')
   const [password, setPassword] = useState('admin123')
@@ -30,9 +32,7 @@ export const useLoginFormHook = ({ onSubmit }: { onSubmit?: () => void }) => {
 
       if (!result?.error) {
         router.refresh()
-        if (onSubmit) {
-          onSubmit()
-        }
+        closeModal()
       } else {
         setError('Invalid credentials')
       }
@@ -69,4 +69,4 @@ export const useLoginFormHook = ({ onSubmit }: { onSubmit?: () => void }) => {
   }
 }
 
-export default useLoginFormHook
+export default useLoginModalContentsHook

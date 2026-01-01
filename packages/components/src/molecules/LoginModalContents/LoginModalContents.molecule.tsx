@@ -1,8 +1,6 @@
-// @ts-nocheck - React 19 type conflicts with components
-'use client'
-
 // import hooks
-import useLoginForm from './LoginForm.hook'
+import { useSession } from 'next-auth/react'
+import useLoginModalContents from './LoginModalContents.hook'
 
 // import components
 import Box from '@packages/components/atoms/Box'
@@ -14,7 +12,9 @@ import Button from '@packages/components/atoms/Button'
 // import types
 import type { FC } from 'react'
 
-export const LoginFormOrganismComponent: FC<{ onSubmit?: () => void }> = ({ onSubmit }) => {
+export const LoginModalContentsMoleculeComponent: FC = () => {
+  const session = useSession()
+
   const {
     email,
     setEmail,
@@ -24,14 +24,12 @@ export const LoginFormOrganismComponent: FC<{ onSubmit?: () => void }> = ({ onSu
     isLoading,
     submitHandler,
     submitDisabled,
-  } = useLoginForm({ onSubmit })
+  } = useLoginModalContents()
+
+  if (session.status === 'authenticated') return null
 
   return (
-    <Form
-      title="Sign In"
-      description="Enter your credentials to access your account"
-      onSubmit={submitHandler}
-    >
+    <Form onSubmit={submitHandler}>
       <Form.Element>
         <Label htmlFor="email">Email</Label>
         <Input
@@ -64,4 +62,4 @@ export const LoginFormOrganismComponent: FC<{ onSubmit?: () => void }> = ({ onSu
   )
 }
 
-export default LoginFormOrganismComponent
+export default LoginModalContentsMoleculeComponent
