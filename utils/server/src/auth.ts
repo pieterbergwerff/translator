@@ -283,7 +283,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
-    async jwt({ token, user, trigger }) {
+    async jwt({ token, user }) {
       // On sign in, store the full user data in the token
       if (user) {
         token.id = user.id

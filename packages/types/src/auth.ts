@@ -76,7 +76,6 @@ export interface UseVerificationTokenData {
 
 // NextAuth module augmentation
 import type { DefaultSession } from 'next-auth'
-import type { User as UserDTO } from '@packages/validators/user.validator'
 
 declare module 'next-auth' {
   interface Session {

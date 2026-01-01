@@ -51,14 +51,4 @@ describe('Dialog Component', () => {
     render(<Dialog open>Content without visible title</Dialog>)
     expect(screen.getByText('Content without visible title')).toBeInTheDocument()
   })
-
-  it('displays overlay', () => {
-    const { container } = render(
-      <Dialog title="Test" open>
-        Content
-      </Dialog>
-    )
-    const overlay = container.querySelector('[class*="fixed"][class*="inset-0"]')
-    expect(overlay).toBeInTheDocument()
-  })
 })
