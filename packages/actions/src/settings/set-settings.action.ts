@@ -12,15 +12,15 @@ export const setSettingsAction = async (
   settingsValue: string
 ): Promise<Settings | null> => {
   const session = await getSession()
-  if (!session?.user?.id) return null
+  if (!session?.user?.userId) return null
 
   const result = await db('settings')
-    .where({ settingsName, settingsUserId: session.user.id })
+    .where({ settingsName, settingsUserId: session.user.userId })
     .first()
   if (result) {
     // Update existing setting
     const updatedSetting = await db('settings')
-      .where({ settingsName, settingsUserId: session.user.id })
+      .where({ settingsName, settingsUserId: session.user.userId })
       .update({ settingsValue })
       .returning('*')
     return updatedSetting[0] ?? null
@@ -28,7 +28,7 @@ export const setSettingsAction = async (
     // Insert new setting
     const newSetting: Settings = {
       settingsId: crypto.randomUUID(),
-      settingsUserId: session.user.id,
+      settingsUserId: session.user.userId,
       settingsName,
       settingsValue,
       created_at: new Date(),

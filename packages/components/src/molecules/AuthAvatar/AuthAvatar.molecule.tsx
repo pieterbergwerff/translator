@@ -46,7 +46,6 @@ export const AuthAvatarMoleculeComponent = async () => {
               </MenubarItem>
               <MenubarSeparator />
               <MenuItemLogin />
-              <MenuItemSettings />
             </>
           )}
         </MenubarContent>

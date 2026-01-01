@@ -186,7 +186,6 @@ async function initializeRootUser() {
     const existingUser = await db('users').where({ userEmail: rootEmail }).first()
 
     if (existingUser) {
-      console.log('Root user already exists:', rootEmail)
       return
     }
 

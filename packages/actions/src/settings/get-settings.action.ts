@@ -9,11 +9,12 @@ import { Settings } from '@packages/validators/settings.validator'
 
 export const getSettingsAction = async (settingName: string): Promise<Settings | null> => {
   const session = await getSession()
-  if (!session?.user?.id) return null
+  if (!session?.user?.userId) return null
 
   const result = await db('settings')
-    .where({ settingsName: settingName, settingsUserId: session.user.id })
+    .where({ settingsName: settingName, settingsUserId: session.user.userId })
     .first()
+
   return result ?? null
 }
 
