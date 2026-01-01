@@ -2,8 +2,6 @@ import Dexie from 'dexie'
 
 export const db = new Dexie('translator')
 
-db.version(1).stores({
-  settings: 'settingsId, settingsName',
-})
+db.version(1).stores({})
 
 export default db
