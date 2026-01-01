@@ -64,9 +64,14 @@ describe('useLocalStorage hook', () => {
   })
 
   it('handles invalid JSON in localStorage gracefully', () => {
+    // Suppress console.warn for this test
+    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
     localStorage.setItem(TEST_KEY, 'invalid-json{')
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, TEST_VALUE))
     expect(result.current[0]).toBe(TEST_VALUE)
+
+    consoleWarnSpy.mockRestore()
   })
 
   it('stores undefined as JSON string in localStorage', () => {

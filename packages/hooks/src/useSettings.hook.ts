@@ -9,7 +9,7 @@ export const useSettings = (settingName: string, defaultValue?: string) => {
   const user = useLogged()
 
   // getter
-  const { data, isLoading } = useSwr(!!user ? `settings-get-${settingName}` : null, async () => {
+  const { data, isLoading } = useSwr(user ? `settings-get-${settingName}` : null, async () => {
     const setting = await getSettingsAction(settingName)
     return setting?.settingsValue ? setting.settingsValue : defaultValue
   })
