@@ -9,6 +9,7 @@
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "test": "turbo run test",
+        "test:unit": "turbo run test --filter=!@tests/end-to-end",
         "test:ui": "turbo run test:ui",
         "storybook": "turbo run storybook",
         "clean": "turbo run clean && rm -rf node_modules package-lock.json .turbo",
