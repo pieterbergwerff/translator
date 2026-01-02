@@ -10,6 +10,7 @@ import Menubar, {
   MenubarItem,
   MenubarSeparator,
 } from '@packages/components/molecules/Menubar'
+import MenuItemUserName from './components/MenuItemUserName'
 import MenuItemSignOut from './components/MenuItemSignOut'
 import MenuItemSettings from './components/MenuItemSettings'
 import MenuItemLogin from './components/MenuItemLogin'
@@ -32,9 +33,8 @@ export const AuthAvatarMoleculeComponent = async () => {
         <MenubarContent align="end">
           {session ? (
             <>
-              <MenubarItem disabled className="font-medium">
-                {session?.user?.userName || session?.user?.userEmail}
-              </MenubarItem>
+              <MenuItemUserName />
+              <MenubarSeparator />
               <MenuItemAccount />
               <MenuItemSettings />
               <MenuItemSignOut />

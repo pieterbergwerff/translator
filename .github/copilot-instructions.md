@@ -393,6 +393,8 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 38. **React 19 hydration E2E selectors** - React 19 hydration creates duplicate DOM elements in E2E tests. Always use `.first()` on selectors that might match multiple elements (e.g., `page.locator('button[type="submit"]').first()`) to avoid "strict mode violation" errors
 39. **SWR testing requires wrapper** - When testing hooks that use SWR, wrap them in `<SWRConfig value={{ provider: () => new Map() }}>` to disable caching and isolate tests. SWR's `isLoading` state may vary during test execution, so focus assertions on data values rather than loading states unless using `waitFor()`
 40. **Settings validator field names** - Settings model uses `created_at` and `updated_at` (not `settingsCreatedAt`/`settingsUpdatedAt`) following the database field naming convention where timestamps don't include table prefix
+41. **Radix UI component type inference** - When using Radix UI primitives, TypeScript may fail to infer component types with error "cannot be named without a reference to...". Add explicit type annotations like `const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu` to fix this
+42. **@utils/client file imports with extension** - When importing individual utility files from `@utils/client`, include the `.ts` extension (e.g., `@utils/client/dispatchSettingsEvent.util.ts`) to ensure proper TypeScript path resolution with wildcard package exports
 
 ## Component Creation Workflow
 
@@ -456,7 +458,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Test Coverage Status
 
-### Unit Tests (154 tests passing)
+### Unit Tests (164 tests passing)
 
 **Components** (24 test files):
 
@@ -471,11 +473,14 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 - ✅ useLogged
 - ✅ useSettings
 - ✅ useSettingsShortcut
+- ✅ useIsRoot
 
 **Utils**:
 
 - ✅ cn (common)
 - ✅ isString (common)
+- ✅ dispatchSettingsEvent (client)
+- ✅ isThemeModeSystemDark (client)
 
 **Validators**:
 
