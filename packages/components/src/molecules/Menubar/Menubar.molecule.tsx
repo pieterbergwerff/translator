@@ -9,7 +9,7 @@ import { Check, ChevronRight, Circle } from 'lucide-react'
 // import types
 import type { ComponentPropsWithoutRef, ElementRef } from 'react'
 
-const MenubarMenu = MenubarPrimitive.Menu
+const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu
 
 const MenubarGroup = MenubarPrimitive.Group
 
