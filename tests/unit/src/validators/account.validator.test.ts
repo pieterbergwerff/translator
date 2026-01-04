@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import AccountValidator from '@packages/validators/account.validator'
+import AccountValidator from '@packages/validators/account.validator.ts'
 
 describe('AccountValidator', () => {
   it('validates a valid account object', () => {

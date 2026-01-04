@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import SettingsValidator from '@packages/validators/setting.validator'
+import SettingsValidator from '@packages/validators/setting.validator.ts'
 
 describe('SettingsValidator', () => {
   it('validates a valid settings object', () => {

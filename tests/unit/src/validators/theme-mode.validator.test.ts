@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import ThemeModeValidator from '@packages/validators/theme-mode.validator'
+import ThemeModeValidator from '@packages/validators/theme-mode.validator.ts'
 
 describe('ThemeModeValidator', () => {
   it('validates "light" theme mode', () => {

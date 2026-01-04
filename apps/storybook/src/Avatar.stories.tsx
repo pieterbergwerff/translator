@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Avatar from '@packages/components/atoms/Avatar'
+import Avatar, { AvatarImage, AvatarFallback } from '@packages/components/atoms/Avatar'
 
 const meta = {
   title: 'Atoms/Avatar',
@@ -15,21 +15,27 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    src: 'https://github.com/shadcn.png',
-    alt: 'User avatar',
-  },
+  render: () => (
+    <Avatar>
+      <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
+      <AvatarFallback>UA</AvatarFallback>
+    </Avatar>
+  ),
 }
 
 export const Fallback: Story = {
-  args: {
-    src: 'https://invalid-url.com/image.png',
-    alt: 'User avatar',
-  },
+  render: () => (
+    <Avatar>
+      <AvatarImage src="https://invalid-url.com/image.png" alt="User avatar" />
+      <AvatarFallback>UA</AvatarFallback>
+    </Avatar>
+  ),
 }
 
 export const NoSource: Story = {
-  args: {
-    alt: 'Fallback avatar',
-  },
+  render: () => (
+    <Avatar>
+      <AvatarFallback>FA</AvatarFallback>
+    </Avatar>
+  ),
 }

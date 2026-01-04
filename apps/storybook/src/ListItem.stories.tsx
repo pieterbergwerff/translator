@@ -16,23 +16,26 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: 'List item content',
+    title: 'List item content',
   },
 }
 
 export const WithLongContent: Story = {
   args: {
-    children:
+    title:
       'This is a longer list item with more content to demonstrate how it handles text wrapping',
   },
 }
 
 export const Multiple: Story = {
+  args: {
+    title: 'Item with args',
+  },
   render: () => (
     <ul className="space-y-2 list-none p-0">
-      <ListItem>First item</ListItem>
-      <ListItem>Second item</ListItem>
-      <ListItem>Third item</ListItem>
+      <ListItem title="First item" />
+      <ListItem title="Second item" />
+      <ListItem title="Third item" />
     </ul>
   ),
 }

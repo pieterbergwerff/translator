@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import SessionValidator from '@packages/validators/session.validator'
+import SessionValidator from '@packages/validators/session.validator.ts'
 
 describe('SessionValidator', () => {
   it('validates a valid session object', () => {

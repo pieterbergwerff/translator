@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import TranslationValidator from '@packages/validators/translation.validator'
+import TranslationValidator from '@packages/validators/translation.validator.ts'
 
 describe('TranslationValidator', () => {
   it('validates a valid translation object', () => {

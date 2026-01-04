@@ -416,6 +416,10 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 43. **Settings validator field names** - Settings model uses `created_at` and `updated_at` (not `settingsCreatedAt`/`settingsUpdatedAt`) following the database field naming convention where timestamps don't include table prefix
 44. **Radix UI component type inference** - When using Radix UI primitives, TypeScript may fail to infer component types with error "cannot be named without a reference to...". Add explicit type annotations like `const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu` to fix this
 45. **@utils/client file imports with extension** - When importing individual utility files from `@utils/client`, include the `.ts` extension (e.g., `@utils/client/dispatchSettingsEvent.util.ts`) to ensure proper TypeScript path resolution with wildcard package exports
+46. **Storybook Avatar component structure** - Avatar is a composite component requiring AvatarImage and AvatarFallback children. Stories should use render functions to demonstrate the proper component composition pattern
+47. **Storybook ListItem required props** - ListItem component requires a `title` prop. Stories must provide title rather than passing children directly
+48. **Test mock AuthUser id type** - AuthUser.id is a number type, not string. Test mocks must use numeric ids (e.g., `{ id: 123 }` not `{ id: 'user-123' }`)
+49. **Hook file naming consistency** - Most hooks use `.hook.ts` extension except useLocalStorage which uses `.ts`. Import paths must match actual filenames
 
 ## Component Creation Workflow
 

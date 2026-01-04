@@ -36,7 +36,7 @@ export const useAdminList = <TData>({
     data: count,
     error: countError,
     isLoading: isCountLoading,
-  } = useSWR([!!getCount ? `admin-list-${type}-count` : null, params], () => getCount?.(params))
+  } = useSWR([getCount ? `admin-list-${type}-count` : null, params], () => getCount?.(params))
 
   console.log({ count })
 

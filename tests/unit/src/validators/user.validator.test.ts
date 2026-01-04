@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import UserValidator from '@packages/validators/user.validator'
+import UserValidator from '@packages/validators/user.validator.ts'
 
 describe('UserValidator', () => {
   it('validates a valid user object', () => {

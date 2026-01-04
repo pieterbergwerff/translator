@@ -2,10 +2,10 @@
 import { describe, it, expect } from 'vitest'
 
 // import validators
-import ProfileSchema from '@packages/validators/profile.validator'
-import PermissionSchema from '@packages/validators/permission.validator'
-import UserProfileSchema from '@packages/validators/userProfile.validator'
-import ProfilePermissionSchema from '@packages/validators/profilePermission.validator'
+import ProfileSchema from '@packages/validators/profile.validator.ts'
+import PermissionSchema from '@packages/validators/permission.validator.ts'
+import UserProfileSchema from '@packages/validators/userProfile.validator.ts'
+import ProfilePermissionSchema from '@packages/validators/profilePermission.validator.ts'
 
 describe('Profile Validator', () => {
   it('should validate a valid profile', () => {
