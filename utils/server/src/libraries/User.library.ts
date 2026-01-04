@@ -27,6 +27,10 @@ export class UserLibrary extends Library<User> {
     return this._all(props)
   }
 
+  public async countAll(props: DatabaseAll<User> = {}) {
+    return this._countAll(props)
+  }
+
   public async getById(userId: User['userId']) {
     return this._getById(userId)
   }

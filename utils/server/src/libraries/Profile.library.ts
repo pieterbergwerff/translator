@@ -19,6 +19,10 @@ export class ProfileLibrary extends Library<Profile> {
     return this._all(props)
   }
 
+  public async countAll(props: DatabaseAll<Profile> = {}) {
+    return this._countAll(props)
+  }
+
   public async getById(profileId: Profile['profileId']) {
     return this._getById(profileId)
   }

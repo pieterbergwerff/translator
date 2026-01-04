@@ -22,6 +22,7 @@ import type { DatabaseAll } from '@packages/validators/database.validator.ts'
 export type AdminListPropTypes<TData> = {
   type: string
   getData: (props: DatabaseAll<TData>) => Promise<TData[] | null>
+  getCount?: (props: DatabaseAll<TData>) => Promise<number | null>
   createForm?: FC<{ onSubmit: (item: Partial<TData>) => Promise<void>; onCancel?: () => void }>
   fields: {
     id: keyof TData
@@ -34,6 +35,7 @@ export type AdminListPropTypes<TData> = {
 export const AdminListOrganismComponent = <TData,>({
   type,
   getData,
+  getCount,
   createForm,
   fields,
 }: AdminListPropTypes<TData>) => {
@@ -45,15 +47,19 @@ export const AdminListOrganismComponent = <TData,>({
     isLoading,
     search,
     setSearch,
-    limit,
+    limit = 0,
     setLimit,
     isAsc,
     setIsAsc,
     orderBy,
     setOrderBy,
+    page,
+    setPage,
+    count,
   } = useAdminList<TData>({
     type,
     getData,
+    getCount,
     fields,
   })
 
@@ -108,17 +114,36 @@ export const AdminListOrganismComponent = <TData,>({
             </Select>
           </>
         ) : null}
-        <Select value={String(limit ?? 100)} onValueChange={(value) => setLimit(Number(value))}>
-          <SelectTrigger className="w-[150px]">
-            <SelectValue placeholder="Limit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="25">25</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
-            <SelectItem value="250">250</SelectItem>
-          </SelectContent>
-        </Select>
+        {limit > 25 ? (
+          <Select value={String(limit ?? 100)} onValueChange={(value) => setLimit(Number(value))}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Limit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="25">25</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+              <SelectItem value="250">250</SelectItem>
+            </SelectContent>
+          </Select>
+        ) : null}
+        {count && limit && count > limit ? (
+          <Select value={String(page ?? 1)} onValueChange={(value) => setPage(Number(value))}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Page" />
+            </SelectTrigger>
+            <SelectContent>
+              {Array.from(
+                { length: Math.ceil((count || 0) / (limit || 100)) || 1 },
+                (_, i) => i + 1
+              ).map((pageNumber) => (
+                <SelectItem key={pageNumber} value={String(pageNumber)}>
+                  {pageNumber}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : null}
       </Box>
       {data?.length
         ? data.map((item) => (

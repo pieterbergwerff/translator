@@ -9,7 +9,12 @@ import useDelayedValue from '@packages/hooks/useDelayedValue.hook.ts'
 import type { DatabaseAll } from '@packages/validators/database.validator.ts'
 import type { AdminListPropTypes } from './AdminList.organism.tsx'
 
-export const useAdminList = <TData>({ type, getData, fields }: AdminListPropTypes<TData>) => {
+export const useAdminList = <TData>({
+  type,
+  getData,
+  getCount,
+  fields,
+}: AdminListPropTypes<TData>) => {
   const [limit, setLimit] = useState<DatabaseAll<TData>['limit']>(100)
   const [page, setPage] = useState<DatabaseAll<TData>['page']>(1)
   const [search, setSearch] = useState<DatabaseAll<TData>['search']>('')
@@ -27,8 +32,16 @@ export const useAdminList = <TData>({ type, getData, fields }: AdminListPropType
   const params = { limit, page, search: delayedSearchValue, order }
   const { data, error, isLoading } = useSWR([`admin-list-${type}`, params], () => getData(params))
 
+  const {
+    data: count,
+    error: countError,
+    isLoading: isCountLoading,
+  } = useSWR([!!getCount ? `admin-list-${type}-count` : null, params], () => getCount?.(params))
+
+  console.log({ count })
+
   return {
-    limit,
+    limit: typeof count === 'number' && (limit || 0) > count ? count : limit,
     setLimit,
     page,
     setPage,
@@ -39,8 +52,9 @@ export const useAdminList = <TData>({ type, getData, fields }: AdminListPropType
     orderBy,
     setOrderBy,
     data,
-    error,
-    isLoading,
+    count,
+    error: error || countError,
+    isLoading: isLoading || isCountLoading,
   }
 }
 

@@ -1,5 +1,6 @@
 // import actions
 import allProfilesAction from '@packages/actions/profile/all-profiles.ts'
+import totalProfilesAction from '@packages/actions/profile/total-profiles.action.ts'
 
 // import components
 import AdminList from '@packages/components/organisms/admin/AdminList'
@@ -12,6 +13,7 @@ export const AdminProfilesOverviewPage: FC = async () => (
   <AdminList<Profile>
     type="profiles"
     getData={allProfilesAction}
+    getCount={totalProfilesAction}
     fields={{ id: 'profileId', title: 'profileName', description: 'profileStatus' }}
   />
 )

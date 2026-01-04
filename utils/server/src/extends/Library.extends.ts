@@ -57,6 +57,42 @@ export class LibraryExtends<TData = unknown> {
     return users
   }
 
+  protected async _countAll(props: DatabaseAll<TData> = {}) {
+    const schema = createDatabaseAllSchema()
+    const validated = schema.parse(props)
+
+    const { search = '', where } = validated
+
+    let query = this.db(this.tableName).count<{ count: number }[]>('* as count')
+
+    // Apply where conditions
+    if (where) {
+      query = query.where(where)
+    }
+
+    if (search) {
+      const columns = await this.db(this.tableName).columnInfo()
+      query = query.where((builder) => {
+        Object.keys(columns).forEach((column, index) => {
+          if (index === 0) {
+            builder.whereRaw(`LOWER(CAST(?? AS TEXT)) LIKE ?`, [
+              column,
+              `%${search.toLowerCase()}%`,
+            ])
+          } else {
+            builder.orWhereRaw(`LOWER(CAST(?? AS TEXT)) LIKE ?`, [
+              column,
+              `%${search.toLowerCase()}%`,
+            ])
+          }
+        })
+      })
+    }
+
+    const result = await query.first()
+    return result ? Number(result.count) : 0
+  }
+
   protected async _getById(id: TData[keyof TData]) {
     const record = await this.db(this.tableName)
       .where({ [this.primaryKey]: id })

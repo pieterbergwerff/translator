@@ -10,9 +10,6 @@
         "lint": "eslint . --max-warnings 0",
         "typecheck": "tsc --noEmit"
     },
-    "dependencies": {
-        "@packages/constants": "*"
-    },
     "devDependencies": {
         "@config/eslint": "*",
         "@config/typescript": "*",
