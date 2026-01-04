@@ -1,14 +1,6 @@
-// import actions
-import getProfileAction from '@packages/actions/profile/get-profile.action.ts'
+// import components
+import AdminProfilesEditPage from '@packages/components/pages/admin/profiles/Edit'
 
-// import types
-import type { FC } from 'react'
-
-const AdminProfilePage: FC<{ params: Promise<{ profileId: string }> }> = async ({ params }) => {
-  const { profileId } = await params
-  const user = await getProfileAction(Number(profileId))
-
-  return <pre>{JSON.stringify(user, null, 2)}</pre>
-}
-
-export default AdminProfilePage
+export default async ({ params }: { params: Promise<{ profileId: string }> }) => (
+  <AdminProfilesEditPage profileId={Number((await params).profileId)} />
+)
