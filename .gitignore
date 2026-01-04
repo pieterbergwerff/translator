@@ -146,3 +146,4 @@ vite.config.ts.timestamp-*
 .storybook/build/
 storybook-static/
 packages/database/dev.sqlite3
+dev.sqlite3
