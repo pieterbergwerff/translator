@@ -3,7 +3,7 @@ import type { Knex } from 'knex'
 export async function up(knex: Knex): Promise<void> {
   // Users table
   await knex.schema.createTable('users', (table) => {
-    table.string('userId').primary()
+    table.increments('userId').primary()
     table.string('userName')
     table.string('userEmail').unique()
     table.timestamp('userEmailVerified')
@@ -13,8 +13,13 @@ export async function up(knex: Knex): Promise<void> {
 
   // Accounts table
   await knex.schema.createTable('accounts', (table) => {
-    table.string('accountId').primary()
-    table.string('accountUserId').references('userId').inTable('users').onDelete('CASCADE')
+    table.increments('accountId').primary()
+    table
+      .integer('accountUserId')
+      .unsigned()
+      .references('userId')
+      .inTable('users')
+      .onDelete('CASCADE')
     table.string('accountType')
     table.string('accountProvider')
     table.string('accountProviderAccountId')
@@ -32,9 +37,14 @@ export async function up(knex: Knex): Promise<void> {
 
   // Sessions table
   await knex.schema.createTable('sessions', (table) => {
-    table.string('sessionId').primary()
+    table.increments('sessionId').primary()
     table.string('sessionToken').unique()
-    table.string('sessionUserId').references('userId').inTable('users').onDelete('CASCADE')
+    table
+      .integer('sessionUserId')
+      .unsigned()
+      .references('userId')
+      .inTable('users')
+      .onDelete('CASCADE')
     table.timestamp('sessionExpires')
     table.timestamps(true, true)
   })

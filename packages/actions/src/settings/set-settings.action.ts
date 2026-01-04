@@ -1,11 +1,13 @@
 'use server'
 
+// import libraries
+import SettingLibrary from '@utils/server/libraries/Setting.library.ts'
+
 // import utils
-import db from '@packages/database/knex'
 import getSession from '@utils/server/getSession.util.ts'
 
 // import types
-import { Settings } from '@packages/validators/settings.validator'
+import { Settings } from '@packages/validators/setting.validator.ts'
 
 export const setSettingsAction = async (
   settingsName: string,
@@ -14,29 +16,9 @@ export const setSettingsAction = async (
   const session = await getSession()
   if (!session?.user?.userId) return null
 
-  const result = await db('settings')
-    .where({ settingsName, settingsUserId: session.user.userId })
-    .first()
-  if (result) {
-    // Update existing setting
-    const updatedSetting = await db('settings')
-      .where({ settingsName, settingsUserId: session.user.userId })
-      .update({ settingsValue })
-      .returning('*')
-    return updatedSetting[0] ?? null
-  } else {
-    // Insert new setting
-    const newSetting: Settings = {
-      settingsId: crypto.randomUUID(),
-      settingsUserId: session.user.userId,
-      settingsName,
-      settingsValue,
-      created_at: new Date(),
-      updated_at: new Date(),
-    }
-    await db('settings').insert(newSetting)
-    return newSetting
-  }
+  const settingLibrary = new SettingLibrary()
+  const result = await settingLibrary.setSetting(settingsName, settingsValue)
+  return result ?? null
 }
 
 export default setSettingsAction

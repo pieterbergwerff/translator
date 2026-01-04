@@ -4,8 +4,8 @@ import AccountValidator from '@packages/validators/account.validator'
 describe('AccountValidator', () => {
   it('validates a valid account object', () => {
     const validAccount = {
-      accountId: '550e8400-e29b-41d4-a716-446655440000',
-      accountUserId: '550e8400-e29b-41d4-a716-446655440001',
+      accountId: 1,
+      accountUserId: 2,
       accountType: 'oauth',
       accountProvider: 'google',
       accountProviderAccountId: 'google-user-123',
@@ -26,8 +26,8 @@ describe('AccountValidator', () => {
 
   it('validates account with null optional fields', () => {
     const validAccount = {
-      accountId: '550e8400-e29b-41d4-a716-446655440000',
-      accountUserId: '550e8400-e29b-41d4-a716-446655440001',
+      accountId: 1,
+      accountUserId: 2,
       accountType: 'credentials',
       accountProvider: 'credentials',
       accountProviderAccountId: 'user-email@example.com',
@@ -46,10 +46,10 @@ describe('AccountValidator', () => {
     expect(result.success).toBe(true)
   })
 
-  it('rejects account with invalid accountId', () => {
+  it('rejects account with invalid account ID', () => {
     const invalidAccount = {
       accountId: 'not-a-uuid',
-      accountUserId: '550e8400-e29b-41d4-a716-446655440001',
+      accountUserId: 2,
       accountType: 'oauth',
       accountProvider: 'google',
       accountProviderAccountId: 'google-user-123',
@@ -61,8 +61,8 @@ describe('AccountValidator', () => {
 
   it('rejects account with empty accountType', () => {
     const invalidAccount = {
-      accountId: '550e8400-e29b-41d4-a716-446655440000',
-      accountUserId: '550e8400-e29b-41d4-a716-446655440001',
+      accountId: 1,
+      accountUserId: 2,
       accountType: '',
       accountProvider: 'google',
       accountProviderAccountId: 'google-user-123',
@@ -74,8 +74,8 @@ describe('AccountValidator', () => {
 
   it('rejects account with missing required fields', () => {
     const invalidAccount = {
-      accountId: '550e8400-e29b-41d4-a716-446655440000',
-      accountUserId: '550e8400-e29b-41d4-a716-446655440001',
+      accountId: 1,
+      accountUserId: 2,
     }
 
     const result = AccountValidator.safeParse(invalidAccount)

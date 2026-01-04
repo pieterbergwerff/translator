@@ -34,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="en"
       className={[inter.variable, ...(themeMode === 'dark' ? ['dark'] : [])].join(' ')}
     >
-      <body className={inter.className}>
+      <body className={`${inter.className} overflow-x-hidden`}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

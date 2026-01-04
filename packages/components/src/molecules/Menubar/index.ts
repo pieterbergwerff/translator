@@ -1,6 +1,6 @@
 export {
   default,
-  MenubarMoleculeComponent,
+  MenubarMoleculeComponent as Menubar,
   MenubarMenu,
   MenubarTrigger,
   MenubarContent,

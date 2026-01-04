@@ -6,9 +6,6 @@ import { useState, startTransition, useActionState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useModalContext } from '@packages/components/providers/Modal'
 
-// import types
-import type { FormEvent } from 'react'
-
 type LoginFormDataType = {
   email: string
   password: string
@@ -44,8 +41,7 @@ export const useLoginModalContentsHook = () => {
     }
   )
 
-  const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+  const submitHandler = async () => {
     setIsLoading(true)
     setError('')
 

@@ -24,10 +24,12 @@
         "@types/bcryptjs": "^2.4.6",
         "@types/node": "^20.0.0",
         "eslint": "^9.0.0",
-        "typescript": "^5.5.0"
+        "typescript": "^5.5.0",
+        "@packages/validators": "*"
     },
     "dependencies": {
         "@packages/database": "*",
+        "@packages/validators": "*",
         "bcryptjs": "^3.0.3",
         "next-auth": "^4.24.0"
     }

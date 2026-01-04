@@ -5,7 +5,7 @@ import db from '@packages/database/knex'
 import getSession from '@utils/server/getSession.util.ts'
 
 // import types
-import type { User } from '@packages/validators/user.validator'
+import type { User } from '@packages/validators/user.validator.ts'
 
 export const getCurrentUserUtil = async (): Promise<User | null> => {
   const session = await getSession()

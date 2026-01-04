@@ -2,9 +2,9 @@
 import { z } from 'zod'
 
 export const SessionSchema = z.object({
-  sessionId: z.string().uuid(),
+  sessionId: z.number(),
   sessionToken: z.string(),
-  sessionUserId: z.string().uuid(),
+  sessionUserId: z.number(),
   sessionExpires: z.date(),
   created_at: z.date(),
   updated_at: z.date(),

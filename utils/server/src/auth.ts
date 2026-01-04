@@ -11,14 +11,16 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 function KnexAdapter(database: typeof db): any {
   return {
     async createUser(user: any) {
-      const userId = crypto.randomUUID()
-      await database('users').insert({
-        userId,
-        userName: user.name,
-        userEmail: user.email,
-        userEmailVerified: user.emailVerified,
-        userImage: user.image,
-      })
+      const [result] = await database('users')
+        .insert({
+          userName: user.name,
+          userEmail: user.email,
+          userEmailVerified: user.emailVerified,
+          userImage: user.image,
+        })
+        .returning('userId')
+      const userId =
+        typeof result === 'object' && result !== null && 'userId' in result ? result.userId : result
       return {
         id: userId,
         name: user.name,
@@ -74,9 +76,7 @@ function KnexAdapter(database: typeof db): any {
       return user
     },
     async linkAccount(account: any) {
-      const accountId = crypto.randomUUID()
       await database('accounts').insert({
-        accountId,
         accountUserId: account.userId,
         accountType: account.type,
         accountProvider: account.provider,
@@ -96,13 +96,17 @@ function KnexAdapter(database: typeof db): any {
         .delete()
     },
     async createSession({ sessionToken, userId, expires }: any) {
-      const sessionId = crypto.randomUUID()
-      await database('sessions').insert({
-        sessionId,
-        sessionToken,
-        sessionUserId: userId,
-        sessionExpires: expires,
-      })
+      const [result] = await database('sessions')
+        .insert({
+          sessionToken,
+          sessionUserId: userId,
+          sessionExpires: expires,
+        })
+        .returning('sessionId')
+      const sessionId =
+        typeof result === 'object' && result !== null && 'sessionId' in result
+          ? result.sessionId
+          : result
       return { id: sessionId, sessionToken, userId, expires }
     },
     async getSessionAndUser(sessionToken: any) {
@@ -191,10 +195,8 @@ async function initializeRootUser() {
 
     // Create root user with hashed password
     const hashedPassword = await bcrypt.hash(rootPassword, 10)
-    const userId = crypto.randomUUID()
 
     await db('users').insert({
-      userId,
       userName: 'Root User',
       userEmail: rootEmail,
       userPassword: hashedPassword,
@@ -253,7 +255,7 @@ export const authOptions: NextAuthOptions = {
           console.log('Login successful for user:', credentials.email)
 
           return {
-            id: user.userId,
+            id: user.userId, // Return as number - NextAuth now expects number
             email: user.userEmail,
             name: user.userName,
             image: user.userImage,
@@ -285,14 +287,18 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       // On sign in, store the full user data in the token
       if (user) {
-        token.id = user.id
+        token.id = user.id as number
       }
 
       // Always fetch fresh user data from database
       if (token.sub) {
         try {
-          const dbUser = await db('users').where({ userId: token.sub }).first()
+          // Convert token.sub to number for database query
+          const userId =
+            typeof token.sub === 'string' ? parseInt(token.sub, 10) : (token.sub as number)
+          const dbUser = await db('users').where({ userId }).first()
           if (dbUser) {
+            token.id = dbUser.userId
             token.userId = dbUser.userId
             token.userName = dbUser.userName
             token.userEmail = dbUser.userEmail

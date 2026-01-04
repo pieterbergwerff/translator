@@ -1,3 +1,5 @@
+'use client'
+
 // import utils
 import cn from '@utils/common/cn'
 import { forwardRef, useState } from 'react'
@@ -37,6 +39,8 @@ export interface ListMoleculeProps extends Omit<ComponentPropsWithoutRef<'div'>,
    * Empty state to show when no items
    */
   emptyState?: ReactNode
+
+  actions?: ReactNode[]
 }
 
 export const ListMoleculeComponent = forwardRef<ElementRef<'div'>, ListMoleculeProps>(
@@ -50,6 +54,7 @@ export const ListMoleculeComponent = forwardRef<ElementRef<'div'>, ListMoleculeP
       onSearchChange,
       header,
       emptyState,
+      actions = [],
       ...props
     },
     ref
@@ -69,10 +74,10 @@ export const ListMoleculeComponent = forwardRef<ElementRef<'div'>, ListMoleculeP
     return (
       <div ref={ref} className={cn('flex flex-col', className)} {...props}>
         {(searchable || header) && (
-          <div className="sticky top-0 z-10 border-b border-border bg-background">
+          <div className="sticky top-0 z-10">
             {header && <div className="p-4">{header}</div>}
             {searchable && (
-              <div className="p-4">
+              <div className="p-4 flex items-center gap-4">
                 <Input
                   type="search"
                   placeholder={searchPlaceholder}
@@ -80,6 +85,13 @@ export const ListMoleculeComponent = forwardRef<ElementRef<'div'>, ListMoleculeP
                   onChange={handleSearchChange}
                   className="w-full"
                 />
+                {actions.length ? (
+                  <div>
+                    {actions.map((action, index) => (
+                      <span key={index}>{action}</span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             )}
           </div>
