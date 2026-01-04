@@ -2,7 +2,7 @@
 import allPermissionsAction from '@packages/actions/permission/all-permissions.ts'
 
 // import components
-import AdminList from '@packages/components/organisms/AdminList'
+import AdminList from '@packages/components/organisms/admin/AdminList'
 
 // import types
 import type { FC } from 'react'

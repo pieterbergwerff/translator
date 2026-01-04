@@ -1,5 +1,5 @@
 // import components
-import AdminDashboard from '@packages/components/organisms/AdminDashboard'
+import AdminDashboard from '@packages/components/organisms/admin/AdminDashboard'
 import Box from '@packages/components/atoms/Box'
 
 // import types

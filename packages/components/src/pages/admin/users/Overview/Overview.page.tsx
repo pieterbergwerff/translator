@@ -2,7 +2,7 @@
 import allUsersAction from '@packages/actions/user/all-users.action.ts'
 
 // import components
-import AdminList from '@packages/components/organisms/AdminList'
+import AdminList from '@packages/components/organisms/admin/AdminList'
 
 // import types
 import type { FC } from 'react'
