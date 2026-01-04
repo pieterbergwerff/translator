@@ -6,7 +6,7 @@ import { useModalContext } from '@packages/components/providers/Modal'
 // import components
 import { MenubarItem } from '@packages/components/molecules/Menubar'
 import { UserCircle2 } from 'lucide-react'
-import AccountModalContents from '@packages/components/molecules/AccountModalContents'
+import AccountModalContents from '@packages/components/molecules/modals/AccountModalContents'
 
 // import types
 import type { FC } from 'react'

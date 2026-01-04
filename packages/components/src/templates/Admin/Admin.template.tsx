@@ -2,7 +2,7 @@
 import AuthLibrary from '@utils/server/libraries/Auth.library.ts'
 
 // import components
-import AdminMenu from '@packages/components/molecules/AdminMenu'
+import AdminMenu from '@packages/components/molecules/admin/AdminMenu'
 import Box from '@packages/components/atoms/Box'
 
 // import types
