@@ -35,11 +35,11 @@ describe('useSettings hook', () => {
   })
 
   it('fetches and returns setting value when user is logged in', async () => {
-    const mockUser = { id: 'user-123', name: 'Test', email: 'test@example.com' }
+    const mockUser = { id: 123, name: 'Test', email: 'test@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(getSettingsAction).mockResolvedValue({
-      settingsId: '1',
-      settingsUserId: 'user-123',
+      settingsId: 1,
+      settingsUserId: 123,
       settingsName: 'theme',
       settingsValue: 'dark',
       created_at: new Date(),
@@ -55,7 +55,7 @@ describe('useSettings hook', () => {
   })
 
   it('returns default value when setting does not exist', async () => {
-    const mockUser = { id: 'user-123', name: 'Test', email: 'test@example.com' }
+    const mockUser = { id: 123, name: 'Test', email: 'test@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(getSettingsAction).mockResolvedValue(null)
 
@@ -68,11 +68,11 @@ describe('useSettings hook', () => {
   })
 
   it('returns default value when setting value is empty', async () => {
-    const mockUser = { id: 'user-123', name: 'Test', email: 'test@example.com' }
+    const mockUser = { id: 123, name: 'Test', email: 'test@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(getSettingsAction).mockResolvedValue({
-      settingsId: '1',
-      settingsUserId: 'user-123',
+      settingsId: 1,
+      settingsUserId: 123,
       settingsName: 'theme',
       settingsValue: '',
       created_at: new Date(),

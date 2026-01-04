@@ -28,6 +28,25 @@ import { UserSchema, AccountSchema } from '@packages/validators'
 
 Path mappings in `package.json` exports field enable direct imports: `"./atoms/*": "./src/atoms/*/index.tsx"`
 
+### Package Configuration Pattern
+
+**All non-app packages** (packages in `@packages/*`, `@utils/*`, `@config/*`) MUST include this exports configuration in their `package.json`:
+
+```json
+"exports": {
+    "./*": "./src/*"
+},
+"typesVersions": {
+    "*": {
+        "*": [
+            "./src/*"
+        ]
+    }
+}
+```
+
+This pattern enables TypeScript path resolution and direct file imports without barrel exports. Apps in `@apps/*` do not require this pattern.
+
 ### Package Structure
 
 - `@packages/*` - Shared libraries (components/hooks/validators/types/constants/theme/translate/database)
@@ -378,23 +397,29 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 24. **@utils/common package exports** - The `@utils/common` package requires explicit `exports` field mappings for each file (e.g., `"./cn": "./src/cn.ts"`) rather than wildcard patterns to ensure proper TypeScript resolution
 25. **React 19 hydration duplicates** - React 19 may cause hydration issues resulting in duplicate elements in E2E tests. Use `.first()` selector in Playwright tests to handle this (e.g., `page.getByRole('button', { name: 'login' }).first().click()`)
 26. **jest-dom matchers in new tests** - Always import `'@testing-library/jest-dom/vitest'` at the top of test files to enable TypeScript types for jest-dom matchers like `toBeInTheDocument()`, `toHaveAttribute()`, etc.
-
-27. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
-28. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
-29. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
-30. **TypeScript rootDir requirement** - Packages using direct file exports in `exports` field must specify `rootDir` in tsconfig.json to avoid ambiguous project root errors
-31. **Redundant boolean casts** - ESLint will flag `!!variable` as redundant - use `variable` directly when the value is already truthy/falsy
-32. **window.matchMedia mock required** - Test environments must mock `window.matchMedia` in vitest.setup.ts for components that check media queries (see vitest.setup.ts for implementation)
-33. **AuthClientProvider props** - When testing components that use `useAuthContext`, wrap them in `AuthClientProvider` with `initialLoginModalOpen` prop to control modal state
-34. **SessionProvider mock for tests** - When mocking `next-auth/react`, include `SessionProvider: ({ children }) => children` to avoid "No SessionProvider export" errors
-35. **Async server component tests** - Server components using `getSession()` from `@utils/server` are too complex to test in client-side test environments - consider integration testing or skip unit tests
-36. **E2E test timing in CI** - GitHub Actions CI is slower than local environments. Always add `waitForLoadState('networkidle')` after page navigation and use explicit `toBeVisible()` checks with timeouts (e.g., `{ timeout: 10000 }`) before interacting with modal elements
-37. **E2E controlled input limitations** - Radix UI modals with animated overlays can intercept Playwright clicks/focus events. When testing controlled React inputs with default values, verify UI structure and attributes rather than attempting complex form interactions that trigger "subtree intercepts pointer events" errors
-38. **React 19 hydration E2E selectors** - React 19 hydration creates duplicate DOM elements in E2E tests. Always use `.first()` on selectors that might match multiple elements (e.g., `page.locator('button[type="submit"]').first()`) to avoid "strict mode violation" errors
-39. **SWR testing requires wrapper** - When testing hooks that use SWR, wrap them in `<SWRConfig value={{ provider: () => new Map() }}>` to disable caching and isolate tests. SWR's `isLoading` state may vary during test execution, so focus assertions on data values rather than loading states unless using `waitFor()`
-40. **Settings validator field names** - Settings model uses `created_at` and `updated_at` (not `settingsCreatedAt`/`settingsUpdatedAt`) following the database field naming convention where timestamps don't include table prefix
-41. **Radix UI component type inference** - When using Radix UI primitives, TypeScript may fail to infer component types with error "cannot be named without a reference to...". Add explicit type annotations like `const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu` to fix this
-42. **@utils/client file imports with extension** - When importing individual utility files from `@utils/client`, include the `.ts` extension (e.g., `@utils/client/dispatchSettingsEvent.util.ts`) to ensure proper TypeScript path resolution with wildcard package exports
+27. **Validator import file extensions** - When importing validators across packages, MUST include `.ts` extension for proper TypeScript resolution (e.g., `import { Settings } from '@packages/validators/setting.validator.ts'` not `setting.validator`)
+28. **Next.js page exports** - Next.js pages must ONLY have a default export. Named exports like `export const MyPage: FC = ...` will cause build errors. Use `const MyPage: FC = ...` followed by `export default MyPage`
+29. **Unused imports in components** - TypeScript `noUnusedLocals` will flag unused imports. Remove them during typecheck phase to avoid build errors
+30. **E2E test structure** - Group related tests in `test.describe()` blocks for better organization and setup/teardown management
+31. **Template test complexity** - Template components that render conditional content based on auth context require careful mocking of both NextAuth session and Auth provider state
+32. **E2E authentication tests** - E2E tests that require actual authentication with database credentials will fail in CI unless the database is properly seeded. Design E2E tests to verify UI behavior without requiring valid login credentials
+33. **TypeScript rootDir requirement** - Packages using direct file exports in `exports` field must specify `rootDir` in tsconfig.json to avoid ambiguous project root errors
+34. **Redundant boolean casts** - ESLint will flag `!!variable` as redundant - use `variable` directly when the value is already truthy/falsy
+35. **window.matchMedia mock required** - Test environments must mock `window.matchMedia` in vitest.setup.ts for components that check media queries (see vitest.setup.ts for implementation)
+36. **AuthClientProvider props** - When testing components that use `useAuthContext`, wrap them in `AuthClientProvider` with `initialLoginModalOpen` prop to control modal state
+37. **SessionProvider mock for tests** - When mocking `next-auth/react`, include `SessionProvider: ({ children }) => children` to avoid "No SessionProvider export" errors
+38. **Async server component tests** - Server components using `getSession()` from `@utils/server` are too complex to test in client-side test environments - consider integration testing or skip unit tests
+39. **E2E test timing in CI** - GitHub Actions CI is slower than local environments. Always add `waitForLoadState('networkidle')` after page navigation and use explicit `toBeVisible()` checks with timeouts (e.g., `{ timeout: 10000 }`) before interacting with modal elements
+40. **E2E controlled input limitations** - Radix UI modals with animated overlays can intercept Playwright clicks/focus events. When testing controlled React inputs with default values, verify UI structure and attributes rather than attempting complex form interactions that trigger "subtree intercepts pointer events" errors
+41. **React 19 hydration E2E selectors** - React 19 hydration creates duplicate DOM elements in E2E tests. Always use `.first()` on selectors that might match multiple elements (e.g., `page.locator('button[type="submit"]').first()`) to avoid "strict mode violation" errors
+42. **SWR testing requires wrapper** - When testing hooks that use SWR, wrap them in `<SWRConfig value={{ provider: () => new Map() }}>` to disable caching and isolate tests. SWR's `isLoading` state may vary during test execution, so focus assertions on data values rather than loading states unless using `waitFor()`
+43. **Settings validator field names** - Settings model uses `created_at` and `updated_at` (not `settingsCreatedAt`/`settingsUpdatedAt`) following the database field naming convention where timestamps don't include table prefix
+44. **Radix UI component type inference** - When using Radix UI primitives, TypeScript may fail to infer component types with error "cannot be named without a reference to...". Add explicit type annotations like `const MenubarMenu: typeof MenubarPrimitive.Menu = MenubarPrimitive.Menu` to fix this
+45. **@utils/client file imports with extension** - When importing individual utility files from `@utils/client`, include the `.ts` extension (e.g., `@utils/client/dispatchSettingsEvent.util.ts`) to ensure proper TypeScript path resolution with wildcard package exports
+46. **Storybook Avatar component structure** - Avatar is a composite component requiring AvatarImage and AvatarFallback children. Stories should use render functions to demonstrate the proper component composition pattern
+47. **Storybook ListItem required props** - ListItem component requires a `title` prop. Stories must provide title rather than passing children directly
+48. **Test mock AuthUser id type** - AuthUser.id is a number type, not string. Test mocks must use numeric ids (e.g., `{ id: 123 }` not `{ id: 'user-123' }`)
+49. **Hook file naming consistency** - Most hooks use `.hook.ts` extension except useLocalStorage which uses `.ts`. Import paths must match actual filenames
 
 ## Component Creation Workflow
 
@@ -458,14 +483,14 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 ## Test Coverage Status
 
-### Unit Tests (164 tests passing)
+### Unit Tests (219 tests passing)
 
-**Components** (24 test files):
+**Components** (25 test files):
 
-- ✅ All atoms: Button, Label, Input, Box, Form, Toggle, Avatar
-- ✅ All molecules: Dialog, ToggleGroup, Menubar, ButtonGroup
+- ✅ All atoms: Button, Label, Input, Box, Form, Toggle, Avatar, ButtonLink, DashboardItem, ListItem
+- ✅ All molecules: Dialog, ToggleGroup, Menubar, ButtonGroup, Dashboard, List
 - ❌ Templates: Default (removed - async server component too complex for client-side testing)
-- ❌ Molecules: AuthAvatar (server component using `getSession()` - too complex for client-side testing), AccountModalContents, LoginModalContents, SettingsModalContents (require complex hook mocking and auth context)
+- ❌ Molecules: AuthAvatar (server component using `getSession()` - too complex for client-side testing), AccountModalContents, LoginModalContents, SettingsModalContents, UserCreateForm (require complex hook mocking and auth context)
 
 **Hooks**:
 
@@ -484,7 +509,7 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 **Validators**:
 
-- ✅ All validators: user, session, account, verification-token, translation, settings, theme-mode
+- ✅ All validators: user, session, account, verification-token, translation, setting, theme-mode, profile, permission, userProfile, profilePermission
 
 ### E2E Tests (Playwright)
 
@@ -507,9 +532,10 @@ vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 **Coverage**:
 
-- ✅ Atoms: Button, Label, Input, Box, Form, Toggle
+- ✅ Atoms: Button, Label, Input, Box, Form, Toggle, Avatar, ButtonLink, DashboardItem, ListItem
+- ✅ Molecules: Dashboard, List
 - ❌ Molecules: Dialog (complex), AuthAvatar (server component), SwitchThemeMode (needs settings hook), ToggleGroup (covered by Toggle stories), Menubar (complex with dynamic menus)
-- ❌ Organisms: LoginModal, LoginForm, SettingsModal (all provider dependent)
+- ❌ Organisms: LoginModal, LoginForm, SettingsModal, UserCreateForm (all provider dependent)
 - ❌ Templates: Default (provider dependent)
 
 Note: Complex components requiring auth context or providers are intentionally excluded from Storybook as they cannot be properly demonstrated in isolation.

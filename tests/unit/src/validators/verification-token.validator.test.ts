@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import VerificationTokenValidator from '@packages/validators/verification-token.validator'
+import VerificationTokenValidator from '@packages/validators/verification-token.validator.ts'
 
 describe('VerificationTokenValidator', () => {
   it('validates a valid verification token object', () => {

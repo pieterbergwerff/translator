@@ -35,7 +35,7 @@ describe('useIsRoot hook', () => {
   })
 
   it('returns true when user is root', async () => {
-    const mockUser = { id: 'user-123', name: 'Admin', email: 'admin@example.com' }
+    const mockUser = { id: 123, name: 'Admin', email: 'admin@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(isRootUserAction).mockResolvedValue(true)
 
@@ -48,7 +48,7 @@ describe('useIsRoot hook', () => {
   })
 
   it('returns false when user is not root', async () => {
-    const mockUser = { id: 'user-456', name: 'Regular User', email: 'user@example.com' }
+    const mockUser = { id: 456, name: 'Regular User', email: 'user@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(isRootUserAction).mockResolvedValue(false)
 
@@ -61,14 +61,14 @@ describe('useIsRoot hook', () => {
   })
 
   it('calls isRootUserAction with correct user id', async () => {
-    const mockUser = { id: 'user-789', name: 'Test User', email: 'test@example.com' }
+    const mockUser = { id: 789, name: 'Test User', email: 'test@example.com' }
     vi.mocked(useLogged).mockReturnValue({ user: mockUser, update: vi.fn() })
     vi.mocked(isRootUserAction).mockResolvedValue(false)
 
     renderHook(() => useIsRootHook(), { wrapper })
 
     await waitFor(() => {
-      expect(isRootUserAction).toHaveBeenCalledWith('user-789')
+      expect(isRootUserAction).toHaveBeenCalledWith(789)
     })
   })
 })

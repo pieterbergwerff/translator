@@ -1,19 +1,20 @@
 'use server'
 
+// import libraries
+import SettingLibrary from '@utils/server/libraries/Setting.library.ts'
+
 // import utils
-import db from '@packages/database/knex'
 import getSession from '@utils/server/getSession.util.ts'
 
 // import types
-import { Settings } from '@packages/validators/settings.validator'
+import { Settings } from '@packages/validators/setting.validator.ts'
 
 export const getSettingsAction = async (settingName: string): Promise<Settings | null> => {
   const session = await getSession()
   if (!session?.user?.userId) return null
 
-  const result = await db('settings')
-    .where({ settingsName: settingName, settingsUserId: session.user.userId })
-    .first()
+  const settingLibrary = new SettingLibrary()
+  const result = await settingLibrary.getSetting(settingName)
 
   return result ?? null
 }

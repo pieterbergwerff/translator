@@ -1,16 +1,16 @@
 export interface User {
-  id: string
+  id: number
   name: string
   email: string
   createdAt: Date
 }
 
 export interface Translation {
-  id: string
+  id: number
   sourceText: string
   targetText: string
   sourceLang: string
   targetLang: string
-  userId: string
+  userId: number
   createdAt: Date
 }

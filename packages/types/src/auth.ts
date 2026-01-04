@@ -1,6 +1,6 @@
 // NextAuth database types
 export interface AuthUser {
-  id: string
+  id: number
   name?: string | null
   email?: string | null
   emailVerified?: Date | null
@@ -8,8 +8,8 @@ export interface AuthUser {
 }
 
 export interface Account {
-  id: string
-  userId: string
+  id: number
+  userId: number
   type: string
   provider: string
   providerAccountId: string
@@ -23,9 +23,9 @@ export interface Account {
 }
 
 export interface Session {
-  id: string
+  id: number
   sessionToken: string
-  userId: string
+  userId: number
   expires: Date
 }
 
@@ -54,7 +54,7 @@ export interface SessionWithUser {
 
 export interface CreateSessionData {
   sessionToken: string
-  userId: string
+  userId: number
   expires: Date
 }
 
@@ -80,8 +80,8 @@ import type { DefaultSession } from 'next-auth'
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: string
-      userId: string
+      id: number
+      userId: number
       userName: string
       userEmail: string
       userEmailVerified?: Date | null
@@ -90,7 +90,7 @@ declare module 'next-auth' {
   }
 
   interface User {
-    id: string
+    id: number
     name?: string | null
     email?: string | null
     emailVerified?: Date | null
@@ -100,8 +100,8 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    id: string
-    userId: string
+    id: number
+    userId: number
     userName: string
     userEmail: string
     userEmailVerified?: Date | null

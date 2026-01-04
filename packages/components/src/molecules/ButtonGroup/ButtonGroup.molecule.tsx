@@ -7,10 +7,19 @@ import type { HTMLAttributes } from 'react'
 
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   orientation?: 'horizontal' | 'vertical'
+  reversed?: boolean
 }
 
 export const ButtonGroupMoleculeComponent = forwardRef<HTMLDivElement, ButtonGroupProps>(
-  ({ className, orientation = 'horizontal', ...props }, ref) => {
+  ({ className, orientation = 'horizontal', reversed = false, ...props }, ref) => {
+    const horizontalStyles = reversed
+      ? '[&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-s-none [&>*:last-child:not(:only-child)]:rounded-e-none'
+      : '[&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-e-none [&>*:last-child:not(:only-child)]:rounded-s-none'
+
+    const verticalStyles = reversed
+      ? '[&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-t-none [&>*:last-child:not(:only-child)]:rounded-b-none'
+      : '[&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-b-none [&>*:last-child:not(:only-child)]:rounded-t-none'
+
     return (
       <div
         ref={ref}
@@ -18,9 +27,8 @@ export const ButtonGroupMoleculeComponent = forwardRef<HTMLDivElement, ButtonGro
         data-orientation={orientation}
         className={cn(
           'inline-flex items-center',
-          orientation === 'horizontal'
-            ? '[&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-e-none [&>*:last-child:not(:only-child)]:rounded-s-none'
-            : 'flex-col [&>*:not(:first-child):not(:last-child)]:rounded-none [&>*:first-child:not(:only-child)]:rounded-b-none [&>*:last-child:not(:only-child)]:rounded-t-none',
+          reversed && (orientation === 'horizontal' ? 'flex-row-reverse' : 'flex-col-reverse'),
+          orientation === 'horizontal' ? horizontalStyles : `flex-col ${verticalStyles}`,
           className
         )}
         {...props}

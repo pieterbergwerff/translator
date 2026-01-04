@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
-import UserValidator from '@packages/validators/user.validator'
+import UserValidator from '@packages/validators/user.validator.ts'
 
 describe('UserValidator', () => {
   it('validates a valid user object', () => {
     const validUser = {
-      userId: '550e8400-e29b-41d4-a716-446655440000',
+      userId: 1,
       userName: 'John Doe',
       userEmail: 'john@example.com',
       userEmailVerified: new Date(),
@@ -19,7 +19,7 @@ describe('UserValidator', () => {
 
   it('validates user with null optional fields', () => {
     const validUser = {
-      userId: '550e8400-e29b-41d4-a716-446655440000',
+      userId: 1,
       userName: 'John Doe',
       userEmail: 'john@example.com',
       created_at: new Date(),
@@ -32,9 +32,9 @@ describe('UserValidator', () => {
     expect(result.success).toBe(true)
   })
 
-  it('rejects user with invalid userId format', () => {
+  it('rejects user with invalid user ID format', () => {
     const invalidUser = {
-      userId: 'invalid-uuid',
+      userId: 'invalid-number',
       userName: 'John Doe',
       userEmail: 'john@example.com',
     }
@@ -45,7 +45,7 @@ describe('UserValidator', () => {
 
   it('rejects user with invalid email', () => {
     const invalidUser = {
-      userId: '550e8400-e29b-41d4-a716-446655440000',
+      userId: 1,
       userName: 'John Doe',
       userEmail: 'invalid-email',
     }
@@ -56,7 +56,7 @@ describe('UserValidator', () => {
 
   it('rejects user with empty userName', () => {
     const invalidUser = {
-      userId: '550e8400-e29b-41d4-a716-446655440000',
+      userId: 1,
       userName: '',
       userEmail: 'john@example.com',
     }
@@ -67,7 +67,7 @@ describe('UserValidator', () => {
 
   it('rejects user with missing required fields', () => {
     const invalidUser = {
-      userId: '550e8400-e29b-41d4-a716-446655440000',
+      userId: 1,
     }
 
     const result = UserValidator.safeParse(invalidUser)

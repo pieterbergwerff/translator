@@ -2,8 +2,8 @@
 import { z } from 'zod'
 
 export const AccountSchema = z.object({
-  accountId: z.string().uuid(),
-  accountUserId: z.string().uuid(),
+  accountId: z.number(),
+  accountUserId: z.number(),
   accountType: z.string(),
   accountProvider: z.string(),
   accountProviderAccountId: z.string(),

@@ -62,9 +62,22 @@ const users = await db('users').select('*')
 Migration files are stored in `migrations/` directory and follow the naming pattern:
 `YYYYMMDDHHMMSS_description.ts`
 
-The package includes a migration for Next-Auth tables:
+The package includes migrations for:
 
-- `users`
-- `accounts`
-- `sessions`
-- `verificationTokens`
+### Authentication Tables (Next-Auth)
+
+- `users` - User accounts
+- `accounts` - OAuth account connections
+- `sessions` - User sessions
+- `verificationTokens` - Email verification tokens
+
+### Profile & Permission Tables
+
+- `profiles` - User profiles/roles (e.g., "root", "admin", "user")
+- `permissions` - Individual permissions with rights (read, write, update, delete)
+- `userProfiles` - Many-to-many junction table linking users to profiles
+- `profilePermissions` - Many-to-many junction table linking profiles to permissions
+
+### Root Profile
+
+The migration automatically creates a "root" profile with all permissions (read, write, update, delete). This profile has elevated privileges that override all other permissions.

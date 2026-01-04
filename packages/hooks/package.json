@@ -4,22 +4,10 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./useLocalStorage": "./src/useLocalStorage.ts",
-        "./useLogged.hook": "./src/useLogged.hook.ts",
-        "./useSettings.hook": "./src/useSettings.hook.ts",
         "./*": "./src/*"
     },
     "typesVersions": {
         "*": {
-            "useLocalStorage": [
-                "./src/useLocalStorage.ts"
-            ],
-            "useLogged.hook": [
-                "./src/useLogged.hook.ts"
-            ],
-            "useSettings.hook": [
-                "./src/useSettings.hook.ts"
-            ],
             "*": [
                 "./src/*"
             ]

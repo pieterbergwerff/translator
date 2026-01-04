@@ -15,6 +15,8 @@ import MenuItemSignOut from './components/MenuItemSignOut'
 import MenuItemSettings from './components/MenuItemSettings'
 import MenuItemLogin from './components/MenuItemLogin'
 import MenuItemAccount from './components/MenuItemAccount'
+import MenuItemAdmin from './components/MenuItemAdmin'
+
 import { User, MenuIcon } from 'lucide-react'
 
 export const AuthAvatarMoleculeComponent = async () => {
@@ -35,6 +37,7 @@ export const AuthAvatarMoleculeComponent = async () => {
             <>
               <MenuItemUserName />
               <MenubarSeparator />
+              <MenuItemAdmin />
               <MenuItemAccount />
               <MenuItemSettings />
               <MenuItemSignOut />

@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
-import useLocalStorage from '@packages/hooks/useLocalStorage'
+import useLocalStorage from '@packages/hooks/useLocalStorage.ts'
 
 describe('useLocalStorage hook', () => {
   const TEST_KEY = 'test-key'
@@ -43,7 +43,7 @@ describe('useLocalStorage hook', () => {
     const { result } = renderHook(() => useLocalStorage(TEST_KEY, 'initial'))
 
     act(() => {
-      result.current[1]((prev) => `${prev}-updated`)
+      result.current[1]((prev: string) => `${prev}-updated`)
     })
 
     expect(result.current[0]).toBe('initial-updated')

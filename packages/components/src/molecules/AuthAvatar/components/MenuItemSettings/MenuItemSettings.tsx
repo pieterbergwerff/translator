@@ -6,7 +6,7 @@ import { useModalContext } from '@packages/components/providers/Modal'
 // import components
 import { MenubarItem } from '@packages/components/molecules/Menubar'
 import { Settings } from 'lucide-react'
-import SettingsModalContents from '@packages/components/molecules/SettingsModalContents'
+import SettingsModalContents from '@packages/components/molecules/modals/SettingsModalContents'
 
 // import types
 import type { FC } from 'react'

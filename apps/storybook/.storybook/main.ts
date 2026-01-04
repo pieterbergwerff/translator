@@ -12,7 +12,7 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
-  addons: ['@storybook/addon-essentials'],
+  addons: [],
   typescript: {
     check: false,
     reactDocgen: 'react-docgen-typescript',
@@ -26,7 +26,6 @@ const config: StorybookConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@packages/components': resolve(__dirname, '../../../packages/components/src'),
-      '@packages/hooks': resolve(__dirname, '../../../packages/hooks/src'),
       '@packages/theme': resolve(__dirname, '../../../packages/theme/src'),
       '@packages/validators': resolve(__dirname, '../../../packages/validators/src'),
       '@packages/types': resolve(__dirname, '../../../packages/types/src'),

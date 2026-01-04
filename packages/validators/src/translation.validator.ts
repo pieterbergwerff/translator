@@ -2,12 +2,12 @@
 import { z } from 'zod'
 
 export const TranslationSchema = z.object({
-  translationId: z.string().uuid(),
+  translationId: z.number(),
   translationSourceText: z.string().min(1),
   translationTargetText: z.string().min(1),
   translationSourceLang: z.string().length(2),
   translationTargetLang: z.string().length(2),
-  translationUserId: z.string().uuid(),
+  translationUserId: z.number(),
   created_at: z.date(),
   updated_at: z.date(),
 })

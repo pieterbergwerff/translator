@@ -1,7 +1,9 @@
 'use server'
 
+// import libraries
+import UserLibrary from '@utils/server/libraries/User.library.ts'
+
 // import utils
-import db from '@packages/database/knex'
 import getSession from '@utils/server/getSession.util.ts'
 import { revalidatePath } from 'next/cache'
 
@@ -9,7 +11,7 @@ import { revalidatePath } from 'next/cache'
 import { UserSchema } from '@packages/validators/user.validator.ts'
 
 // import types
-import { User } from '@packages/validators/user.validator'
+import { User } from '@packages/validators/user.validator.ts'
 
 export const updateUserAction = async (user: Pick<User, 'userName'>): Promise<User | null> => {
   const session = await getSession()
@@ -21,11 +23,9 @@ export const updateUserAction = async (user: Pick<User, 'userName'>): Promise<Us
     throw new Error('Invalid user data')
   }
 
-  const result = await db('users')
-    .where({ userId: session.user.userId })
-    .update(user)
-    .returning('*')
-    .then((rows) => rows[0] as User)
+  const userLibrary = new UserLibrary()
+
+  const result = await userLibrary.update(session.user.id, { userName: user.userName })
 
   revalidatePath('/', 'layout')
 

@@ -1,16 +1,15 @@
 'use server'
 
-import knex from '@packages/database/knex'
+// import libraries
+import UserLibrary from '@utils/server/libraries/User.library.ts'
 
-export async function isRootUserAction(userId: string): Promise<boolean> {
+export async function isRootUserAction(userId: number): Promise<boolean> {
   if (!userId) return false
 
-  const rootEmail = process.env.ROOT_USER
-  if (!rootEmail) return false
+  const userLibrary = new UserLibrary()
+  const isRootUser = await userLibrary.isRootUser(userId)
 
-  const user = await knex('users').where({ userId }).first()
-
-  return user?.userEmail?.toLowerCase() === rootEmail.toLowerCase()
+  return isRootUser
 }
 
 export default isRootUserAction

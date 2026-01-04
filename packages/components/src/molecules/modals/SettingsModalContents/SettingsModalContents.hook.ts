@@ -10,7 +10,7 @@ import useSwr from 'swr'
 import useSwrMutation from 'swr/mutation'
 
 // import types
-import type { ThemeMode } from '@packages/validators/theme-mode.validator'
+import type { ThemeMode } from '@packages/validators/theme-mode.validator.ts'
 
 export const useSettingsModalContents = () => {
   // getter
